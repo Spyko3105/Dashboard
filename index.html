@@ -1,1 +1,35 @@
-test
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Bot Discord</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Bienvenue sur le Dashboard de ton Bot Discord</h1>
+    </header>
+
+    <section class="content">
+        <h2>Statut du Bot</h2>
+        <p id="bot-status">Chargement...</p>
+
+        <h2>Commandes disponibles</h2>
+        <ul>
+            <li>/say - Pour dire un message</li>
+            <li>/purge - Pour supprimer des messages</li>
+            <!-- Ajouter les autres commandes ici -->
+        </ul>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 - Mon Bot Discord</p>
+    </footer>
+
+    <script>
+        // Exemple de code pour mettre à jour le statut du bot
+        document.getElementById('bot-status').innerText = "En ligne";
+    </script>
+</body>
+</html>
