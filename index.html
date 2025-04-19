@@ -4,448 +4,268 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Dashboard Bot Discord</title>
-
-  <!-- Liens externes -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-
-  <!-- Styles -->
   <style>
-    :root {
-      --primary: #8e2de2;
-      --secondary: #4a00e0;
-      --background: linear-gradient(to right, #1e1e2f, #2c3e50);
-      --card-bg: linear-gradient(145deg, #2a2a40, #3b3b5c);
-      --highlight: #a0d8ff;
-      --text-color: #fff;
-    }
-
-    /* Thème clair */
-    .light-mode {
-      --background: #f4f4f9;
-      --card-bg: #fff;
-      --highlight: #000;
-      --text-color: #333;
-    }
-
+    /* ---------------------------------------------
+       Global Reset & Base Styles
+    --------------------------------------------- */
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
     }
-
     body {
-      font-family: 'Poppins', sans-serif;
-      background: var(--background);
-      color: var(--text-color);
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      transition: background 0.5s ease, color 0.5s ease;
+      font-family: Arial, sans-serif;
+      line-height: 1.6;
+      background: #f4f4f4;
+      color: #333;
+      transition: background 0.3s, color 0.3s;
     }
 
-    /* Header */
-    .header {
-      background: linear-gradient(to right, var(--secondary), var(--primary));
-      padding: 1rem 2rem;
+    /* ---------------------------------------------
+       Loader Animation (affiché au lancement)
+    --------------------------------------------- */
+    #loader {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: #fff;
       display: flex;
-      justify-content: space-between;
+      justify-content: center;
       align-items: center;
-      border-bottom-left-radius: 1rem;
-      border-bottom-right-radius: 1rem;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+      z-index: 9999;
+    }
+    .spinner {
+      width: 60px;
+      height: 60px;
+      border: 6px solid #ccc;
+      border-top: 6px solid #1d72b8;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
     }
 
-    .logo {
-      font-family: 'Orbitron', sans-serif;
-      font-size: 2rem;
-      letter-spacing: 1px;
-    }
-
-    .controls button {
-      background: transparent;
-      border: none;
+    /* ---------------------------------------------
+       Header
+    --------------------------------------------- */
+    header {
+      background: #1d72b8;
       color: #fff;
-      font-size: 1.5rem;
-      cursor: pointer;
-      transition: transform 0.2s;
+      padding: 1rem;
+      text-align: center;
     }
 
-    .controls button:hover {
-      transform: rotate(20deg);
+    /* ---------------------------------------------
+       Navigation Menu
+    --------------------------------------------- */
+    nav {
+      background: #333;
     }
-
-    /* Menu */
-    .menu {
-      background: rgba(0, 0, 0, 0.25);
-      backdrop-filter: blur(10px);
-      margin: 1rem;
-      padding: 1.5rem;
-      border-radius: 1rem;
-      box-shadow: 0 0 15px rgba(0,0,0,0.2);
-      flex: 0 0 250px;
-    }
-
-    .menu-category {
-      margin-bottom: 2rem;
-    }
-
-    .menu-category h3 {
-      color: var(--highlight);
-      border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-      padding-bottom: 0.5rem;
-      margin-bottom: 0.5rem;
-      font-size: 1.2rem;
-    }
-
-    .menu ul {
+    nav ul {
       list-style: none;
-      padding: 0;
-    }
-
-    .menu ul li {
-      margin: 0.8rem 0;
-    }
-
-    .menu ul li a {
-      text-decoration: none;
-      color: var(--text-color);
-      padding: 0.7rem 1rem;
-      display: flex;
-      align-items: center;
-      border-radius: 1rem;
-      transition: background 0.3s ease, transform 0.3s ease;
-    }
-
-    .menu ul li a:hover {
-      background: rgba(255, 255, 255, 0.1);
-      transform: translateX(5px);
-    }
-
-    .menu ul li a i {
-      margin-right: 10px;
-    }
-
-    /* Content */
-    .content {
-      flex: 1;
-      padding: 2rem;
-      animation: fadeIn 1s ease;
-    }
-
-    .page {
-      display: none;
-    }
-
-    .page.active {
-      display: block;
-    }
-
-    /* Statistiques */
-    .stats {
       display: flex;
       flex-wrap: wrap;
-      gap: 1.5rem;
-      margin-top: 2rem;
+      justify-content: center;
+    }
+    nav li {
+      margin: 0;
+    }
+    nav a {
+      display: block;
+      color: #fff;
+      padding: 1rem;
+      text-decoration: none;
+      transition: background 0.3s;
+    }
+    nav a:hover {
+      background: #575757;
     }
 
-    .stat-card {
-      background: var(--card-bg);
-      flex: 1 1 250px;
-      padding: 2rem;
-      border-radius: 1rem;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-      text-align: center;
-      transition: transform 0.3s;
+    /* ---------------------------------------------
+       Main Content & Sections
+    --------------------------------------------- */
+    main {
+      padding: 1rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    section {
+      background: #fff;
+      flex: 1 1 300px;
+      padding: 1rem;
+      border: 1px solid #ddd;
+      border-radius: 4px;
     }
 
-    .stat-card:hover {
-      transform: translateY(-5px) scale(1.05);
+    /* ---------------------------------------------
+       Contact Form Styles
+    --------------------------------------------- */
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
     }
-
-    .stat-card h2 {
-      font-size: 2.5rem;
-      color: var(--highlight);
-      margin-bottom: 0.5rem;
+    form label {
+      font-weight: bold;
     }
-
-    .stat-card p {
+    form input,
+    form textarea {
+      padding: 0.5rem;
+      border: 1px solid #ccc;
+      border-radius: 4px;
       font-size: 1rem;
     }
-
-    /* Formulaires */
-    form {
-      background: rgba(255, 255, 255, 0.05);
-      padding: 2rem;
-      border-radius: 1rem;
-      max-width: 500px;
-      margin-top: 2rem;
-      box-shadow: 0 0 10px rgba(0,0,0,0.2);
-    }
-
-    form input, form textarea, form button {
-      width: 100%;
-      margin-top: 1rem;
-      padding: 0.8rem;
-      border-radius: 0.5rem;
-      border: none;
-      font-family: inherit;
-    }
-
-    form input, form textarea {
-      background: #2c3e50;
-      color: #fff;
-    }
-
     form button {
-      background: linear-gradient(to right, var(--primary), var(--secondary));
+      padding: 0.75rem;
+      border: none;
+      background: #1d72b8;
       color: #fff;
+      border-radius: 4px;
       cursor: pointer;
-      transition: transform 0.2s;
+      transition: background 0.3s;
+      font-size: 1rem;
     }
-
     form button:hover {
-      transform: scale(1.05);
+      background: #155a8a;
     }
 
-    /* Animations */
-    @keyframes fadeIn {
-      from {
-        opacity: 0;
-        transform: translateY(20px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+    /* ---------------------------------------------
+       Footer
+    --------------------------------------------- */
+    footer {
+      background: #333;
+      color: #fff;
+      text-align: center;
+      padding: 1rem;
+      margin-top: 1rem;
     }
 
-    /* Mode téléphone */
-    @media screen and (max-width: 768px) {
-      .menu {
-        margin: 0.5rem;
-        padding: 1rem;
-      }
-      
-      .header {
+    /* ---------------------------------------------
+       Dark Mode Styles
+    --------------------------------------------- */
+    body.dark-mode {
+      background: #121212;
+      color: #e0e0e0;
+    }
+    body.dark-mode header {
+      background: #333;
+      color: #fff;
+    }
+    body.dark-mode nav {
+      background: #222;
+    }
+    body.dark-mode nav a {
+      color: #ddd;
+    }
+    body.dark-mode section {
+      background: #1e1e1e;
+      border-color: #444;
+    }
+    body.dark-mode footer {
+      background: #222;
+    }
+
+    /* ---------------------------------------------
+       Responsive Design
+    --------------------------------------------- */
+    @media (max-width: 768px) {
+      nav ul {
         flex-direction: column;
-        align-items: flex-start;
-        gap: 1rem;
       }
-
-      .stats {
+      main {
         flex-direction: column;
-        gap: 1rem;
       }
-
-      .menu ul li a {
-        font-size: 1rem;
-        padding: 0.5rem 0.8rem;
-      }
-
-      /* Menu hamburger */
-      .menu-toggle {
-        display: block;
-        background: transparent;
-        border: none;
-        font-size: 2rem;
-        color: #fff;
-        cursor: pointer;
-      }
-
-      .menu ul {
-        display: none;
-        flex-direction: column;
-        gap: 1rem;
-        margin-top: 1rem;
-      }
-
-      .menu.open ul {
-        display: flex;
-      }
-
-      .menu.open .menu-toggle {
-        transform: rotate(90deg);
-      }
-
-      /* Contenu */
-      .content {
-        padding: 1.5rem;
-      }
-      
-      /* Statistiques */
-      .stat-card {
+      section {
         flex: 1 1 100%;
-        margin-bottom: 1rem;
-      }
-
-      form {
-        max-width: 100%;
       }
     }
   </style>
-
-  <!-- Scripts -->
-  <script>
-    function showPage(id) {
-      document.querySelectorAll('.page').forEach(page => page.classList.remove('active'));
-      const page = document.getElementById(id);
-      if (page) page.classList.add('active');
-    }
-
-    // Fonction pour changer le thème
-    let isDarkMode = true;
-    document.querySelector('.theme-toggle').addEventListener('click', () => {
-      if (isDarkMode) {
-        document.body.classList.add('light-mode');
-        isDarkMode = false;
-      } else {
-        document.body.classList.remove('light-mode');
-        isDarkMode = true;
-      }
-    });
-
-    // Validation du formulaire
-    function validateForm(event) {
-      const name = document.querySelector('input[type="text"]').value;
-      const email = document.querySelector('input[type="email"]').value;
-      const message = document.querySelector('textarea').value;
-
-      if (!name || !email || !message) {
-        alert("Tous les champs doivent être remplis.");
-        event.preventDefault();
-      } else if (!/^\S+@\S+\.\S+$/.test(email)) {
-        alert("Veuillez entrer un email valide.");
-        event.preventDefault();
-      }
-    }
-
-    // Menu hamburger
-    document.querySelector('.menu-toggle').addEventListener('click', () => {
-      document.querySelector('.menu').classList.toggle('open');
-    });
-
-    document.addEventListener('DOMContentLoaded', () => {
-      document.querySelectorAll('.menu a').forEach(link => {
-        link.addEventListener('click', (e) => {
-          e.preventDefault();
-          const target = link.getAttribute('href').substring(1);
-          showPage(target);
-        });
-      });
-      showPage('home');
-
-      // Attacher la validation du formulaire
-      const form = document.querySelector('form');
-      if (form) form.addEventListener('submit', validateForm);
-    });
-  </script>
-
 </head>
 <body>
-
-  <!-- Header -->
-  <header class="header">
-    <div class="logo">Discord Bot Dashboard</div>
-    <div class="controls">
-      <button class="theme-toggle"><i class="fas fa-sun"></i></button>
-    </div>
-  </header>
-
-  <!-- Main Layout -->
-  <div style="display: flex; flex-grow: 1;">
-    <!-- Sidebar -->
-    <nav class="menu">
-      <button class="menu-toggle"><i class="fas fa-bars"></i></button>
-      <div class="menu-category">
-        <h3>Navigation</h3>
-        <ul>
-          <li><a href="#home"><i class="fas fa-home"></i> Accueil</a></li>
-          <li><a href="#about"><i class="fas fa-info-circle"></i> À propos</a></li>
-          <li><a href="#contact"><i class="fas fa-envelope"></i> Contact</a></li>
-        </ul>
-      </div>
-      <div class="menu-category">
-        <h3>Configuration</h3>
-        <ul>
-          <li><a href="#config"><i class="fas fa-sliders-h"></i> Paramètres</a></li>
-          <li><a href="#permissions"><i class="fas fa-users-cog"></i> Permissions</a></li>
-          <li><a href="#logs"><i class="fas fa-database"></i> Logs</a></li>
-        </ul>
-      </div>
-      <div class="menu-category">
-        <h3>Outils</h3>
-        <ul>
-          <li><a href="#commands"><i class="fas fa-terminal"></i> Commandes</a></li>
-          <li><a href="#servers"><i class="fas fa-server"></i> Serveurs</a></li>
-        </ul>
-      </div>
-    </nav>
-
-    <!-- Content -->
-    <div class="content">
-      <div id="home" class="page active">
-        <h1>Bienvenue sur le Dashboard</h1>
-        <p>Utilisez le menu pour naviguer dans les fonctionnalités de votre bot Discord.</p>
-        <div class="stats">
-          <div class="stat-card">
-            <h2>87</h2>
-            <p>Serveurs</p>
-          </div>
-          <div class="stat-card">
-            <h2>3,642</h2>
-            <p>Utilisateurs</p>
-          </div>
-          <div class="stat-card">
-            <h2>192</h2>
-            <p>Commandes Utilisées</p>
-          </div>
-        </div>
-      </div>
-
-      <!-- Autres pages -->
-      <div id="about" class="page">
-        <h1>À propos</h1>
-        <p>Informations sur le bot et l'équipe de développement.</p>
-      </div>
-
-      <div id="contact" class="page">
-        <h1>Contact</h1>
-        <form>
-          <input type="text" placeholder="Votre nom" required>
-          <input type="email" placeholder="Votre email" required>
-          <textarea rows="5" placeholder="Votre message" required></textarea>
-          <button type="submit">Envoyer</button>
-        </form>
-      </div>
-
-      <div id="config" class="page">
-        <h1>Paramètres</h1>
-        <p>Configurer votre bot.</p>
-      </div>
-
-      <div id="permissions" class="page">
-        <h1>Permissions</h1>
-        <p>Gérez les rôles et les permissions.</p>
-      </div>
-
-      <div id="logs" class="page">
-        <h1>Logs</h1>
-        <p>Voir l'historique des événements.</p>
-      </div>
-
-      <div id="commands" class="page">
-        <h1>Commandes</h1>
-        <p>Liste des commandes disponibles pour votre bot.</p>
-      </div>
-
-      <div id="servers" class="page">
-        <h1>Serveurs</h1>
-        <p>Liste des serveurs où votre bot est présent.</p>
-      </div>
-
-    </div>
+  <!-- Loading Animation -->
+  <div id="loader">
+    <div class="spinner"></div>
   </div>
 
+  <!-- Header -->
+  <header>
+    <h1>Dashboard Bot Discord</h1>
+  </header>
+  
+  <!-- Navigation Menu -->
+  <nav>
+    <ul>
+      <li><a href="#home">Accueil</a></li>
+      <li><a href="#stats">Statistiques</a></li>
+      <li><a href="#settings">Paramètres</a></li>
+      <li><a href="#contact">Contact</a></li>
+      <li><a href="#toggle-dark" id="darkModeToggle">Mode Sombre</a></li>
+    </ul>
+  </nav>
+  
+  <!-- Main Content -->
+  <main>
+    <!-- Section Accueil -->
+    <section id="home">
+      <h2>Bienvenue</h2>
+      <p>Ceci est votre dashboard interactif pour gérer votre bot Discord. Explorez les fonctionnalités avancées et profitez d'une interface optimisée pour tous les appareils.</p>
+    </section>
+    
+    <!-- Section Statistiques -->
+    <section id="stats">
+      <h2>Statistiques</h2>
+      <p>Ici, vous pouvez visualiser des graphiques et données en temps réel de votre bot. (Les graphiques interactifs pourront être ajoutés via des bibliothèques comme Chart.js.)</p>
+    </section>
+    
+    <!-- Section Paramètres -->
+    <section id="settings">
+      <h2>Paramètres</h2>
+      <p>Configurez les options de votre bot selon vos préférences. Des options supplémentaires pourront être implémentées ici pour un contrôle total.</p>
+    </section>
+    
+    <!-- Section Contact -->
+    <section id="contact">
+      <h2>Contact</h2>
+      <p>Envoyez-nous vos retours ou vos questions via le formulaire ci-dessous.</p>
+      <!-- Formulaire de contact utilisant mailto: (remplacez "adresse@example.com" par votre adresse mail réelle) -->
+      <form id="contactForm" action="mailto:adresse@example.com" method="post" enctype="text/plain">
+        <label for="name">Nom :</label>
+        <input type="text" id="name" name="name" placeholder="Votre nom" required>
+        
+        <label for="email">Email :</label>
+        <input type="email" id="email" name="email" placeholder="Votre email" required>
+        
+        <label for="message">Message :</label>
+        <textarea id="message" name="message" placeholder="Votre message" rows="4" required></textarea>
+        
+        <button type="submit">Envoyer</button>
+      </form>
+    </section>
+  </main>
+  
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2025 Dashboard Bot Discord. Tous droits réservés.</p>
+  </footer>
+
+  <!-- ---------------------------------------------
+       JavaScript: Gestion du Loader & Mode Sombre
+       --------------------------------------------- -->
+  <script>
+    // Supprime l'écran de chargement lorsque la page est complètement chargée
+    window.addEventListener('load', function() {
+      var loader = document.getElementById('loader');
+      loader.style.display = 'none';
+    });
+
+    // Basculer le mode sombre lors du clic
+    var darkModeToggle = document.getElementById('darkModeToggle');
+    darkModeToggle.addEventListener('click', function(e) {
+      e.preventDefault();
+      document.body.classList.toggle('dark-mode');
+    });
+  </script>
 </body>
 </html>
