@@ -4,123 +4,136 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Dashboard Interactif Discord</title>
-  <!-- Lien vers ton fichier CSS externe -->
+  <!-- Lien vers ton fichier CSS -->
   <link rel="stylesheet" href="style.css">
   <!-- Font Awesome pour les icônes -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 <body class="light-theme">
-  <!-- Boutons fixes pour le changement de thème et l'ouverture du menu -->
+  <!-- Boutons fixes pour les fonctionnalités -->
   <button class="theme-toggle" onclick="toggleTheme()">Changer de thème</button>
   <button class="menu-toggle" onclick="toggleMenu()">☰ Menu</button>
-  
+
   <!-- Menu interactif -->
   <nav>
-    <a href="#home" onclick="loadPage('home')">Accueil</a>
-    <a href="#features" onclick="loadPage('features')">Fonctionnalités</a>
-    <a href="#commands" onclick="loadPage('commands')">Commandes</a>
-    <a href="#servers" onclick="loadPage('servers')">Serveurs</a>
-    <a href="#about" onclick="loadPage('about')">À propos</a>
-    <a href="#contact" onclick="loadPage('contact')">Contact</a>
+    <a href="#home" onclick="loadPage('home')"><i class="fas fa-home"></i> Accueil</a>
+    <a href="#features" onclick="loadPage('features')"><i class="fas fa-cogs"></i> Fonctionnalités</a>
+    <a href="#commands" onclick="loadPage('commands')"><i class="fas fa-terminal"></i> Commandes</a>
+    <a href="#servers" onclick="loadPage('servers')"><i class="fas fa-server"></i> Serveurs</a>
+    <a href="#about" onclick="loadPage('about')"><i class="fas fa-info-circle"></i> À propos</a>
+    <a href="#contact" onclick="loadPage('contact')"><i class="fas fa-envelope"></i> Contact</a>
   </nav>
-  
+
+  <!-- En-tête -->
   <header>
-    <h1>Dashboard pour ton Bot Discord</h1>
+    <h1>Dashboard Bot Discord</h1>
   </header>
-  
-  <!-- Contenu dynamique -->
+
+  <!-- Zone dynamique de contenu -->
   <div id="content">
     <!-- Page d'accueil par défaut -->
-    <h2>Accueil</h2>
-    <div style="text-align: center;">
-      <!-- Embedding visuel du bot -->
-      <img src="https://via.placeholder.com/150" alt="Image du Bot" style="border-radius: 50%; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
-      <h3>Ton Bot Discord</h3>
-      <p>Bienvenue sur le dashboard interactif de ton bot Discord.</p>
-      <p>Accède à toutes les fonctionnalités et gérez ton bot en toute simplicité.</p>
-      <a href="https://discord.com/api/oauth2/authorize?client_id=TON_CLIENT_ID&redirect_uri=https%3A%2F%2Fspyko3105.github.io%2FDashboard%2F&response_type=code&scope=identify%20guilds&permissions=8" 
-         style="background: var(--primary-color); color: white; padding: 10px 20px; border-radius: 5px; text-decoration: none; display: inline-block;">Connexion au Bot</a>
-    </div>
+    <section>
+      <h2>Bienvenue sur le Dashboard</h2>
+      <div style="text-align: center;">
+        <!-- Embedding visuel du bot -->
+        <img src="https://via.placeholder.com/150" alt="Image du Bot" style="border-radius: 50%; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
+        <h3>Ton Bot Discord</h3>
+        <p>Gérez facilement votre bot Discord à partir de cette interface moderne.</p>
+        <a href="https://discord.com/oauth2/authorize?client_id=1361826455406772408&permissions=8&integration_type=0&scope=bot" 
+           style="background: var(--primary-color); color: white; padding: 10px 20px; border-radius: 5px; text-decoration: none;">Connexion au Bot</a>
+      </div>
+    </section>
   </div>
-  
+
   <script>
     /* Gestion des thèmes */
     function toggleTheme() {
       document.body.classList.toggle('dark-theme');
       document.body.classList.toggle('light-theme');
     }
-  
-    /* Menu interactif */
+
+    /* Affichage du menu */
     function toggleMenu() {
       const menu = document.querySelector('nav');
       menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
     }
-  
-    /* Pages dynamiques */
+
+    /* Chargement des pages dynamiques */
     function loadPage(page) {
       const content = document.getElementById('content');
       const pages = {
         home: `
-          <h2>Accueil</h2>
-          <div style="text-align: center;">
-            <img src="https://via.placeholder.com/150" alt="Image du Bot" style="border-radius: 50%; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
-            <h3>Ton Bot Discord</h3>
-            <p>Bienvenue sur le dashboard interactif de ton bot Discord.</p>
-            <p>Accède à toutes les fonctionnalités et gère ton bot facilement.</p>
-            <a href="https://discord.com/api/oauth2/authorize?client_id=TON_CLIENT_ID&redirect_uri=https%3A%2F%2Fspyko3105.github.io%2FDashboard%2F&response_type=code&scope=identify%20guilds&permissions=8"
-              style="background: var(--primary-color); color: white; padding: 10px 20px; border-radius: 5px; text-decoration: none; display: inline-block;">Connexion au Bot</a>
-          </div>
+          <section>
+            <h2>Bienvenue sur le Dashboard</h2>
+            <div style="text-align: center;">
+              <img src="https://via.placeholder.com/150" alt="Image du Bot" style="border-radius: 50%; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
+              <h3>Ton Bot Discord</h3>
+              <p>Gérez facilement votre bot Discord à partir de cette interface moderne.</p>
+              <a href="https://discord.com/oauth2/authorize?client_id=1361826455406772408&permissions=8&integration_type=0&scope=bot"
+                style="background: var(--primary-color); color: white; padding: 10px 20px; border-radius: 5px; text-decoration: none;">Connexion au Bot</a>
+            </div>
+          </section>
         `,
         features: `
-          <h2>Fonctionnalités</h2>
-          <p>Découvre tout ce que ton bot peut faire :</p>
-          <div class="grid">
-            <div class="card">
-              <i class="fas fa-sliders-h"></i>
-              <h3>Configuration</h3>
-              <p>Modifie les paramètres en temps réel.</p>
+          <section>
+            <h2>Fonctionnalités</h2>
+            <p>Explorez les outils avancés :</p>
+            <div class="grid">
+              <div class="card">
+                <i class="fas fa-sliders-h"></i>
+                <h3>Configuration</h3>
+                <p>Modifiez les paramètres du bot à tout moment.</p>
+              </div>
+              <div class="card">
+                <i class="fas fa-user-shield"></i>
+                <h3>Permissions</h3>
+                <p>Définissez qui a accès à quoi sur vos serveurs.</p>
+              </div>
+              <div class="card">
+                <i class="fas fa-database"></i>
+                <h3>Logs & Historique</h3>
+                <p>Consultez les actions effectuées sur vos serveurs.</p>
+              </div>
             </div>
-            <div class="card">
-              <i class="fas fa-user-shield"></i>
-              <h3>Permissions</h3>
-              <p>Gère les accès sur tes serveurs.</p>
-            </div>
-            <div class="card">
-              <i class="fas fa-database"></i>
-              <h3>Logs</h3>
-              <p>Consulte les historiques d'activités.</p>
-            </div>
-          </div>
+          </section>
         `,
         commands: `
-          <h2>Commandes</h2>
-          <p>Utilise les commandes suivantes :</p>
-          <ul>
-            <li><code>/kick</code> - Expulse un membre</li>
-            <li><code>/ban</code> - Bannit un utilisateur</li>
-            <li><code>/warn</code> - Avertit un membre</li>
-          </ul>
+          <section>
+            <h2>Commandes</h2>
+            <p>Utilisez ces commandes avec votre bot :</p>
+            <ul>
+              <li><i class="fas fa-user-times"></i> <code>/kick</code> - Expulse un membre</li>
+              <li><i class="fas fa-ban"></i> <code>/ban</code> - Bannissez un membre</li>
+              <li><i class="fas fa-bell"></i> <code>/warn</code> - Avertissez un membre</li>
+            </ul>
+          </section>
         `,
         servers: `
-          <h2>Serveurs</h2>
-          <p>Surveille l'activité de tes serveurs :</p>
-          <ul>
-            <li>Serveur Discord</li>
-            <li>Communauté</li>
-          </ul>
+          <section>
+            <h2>Serveurs</h2>
+            <p>Surveillez l'activité des serveurs :</p>
+            <ul>
+              <li><i class="fas fa-server"></i> Serveur Principal</li>
+              <li><i class="fas fa-users"></i> Communauté Discord</li>
+            </ul>
+          </section>
         `,
         about: `
-          <h2>À propos</h2>
-          <p>Ce projet est dédié à simplifier la gestion de ton bot Discord.</p>
+          <section>
+            <h2>À propos</h2>
+            <p>Ce dashboard est conçu pour fournir une interface simple, moderne et complète.</p>
+          </section>
         `,
         contact: `
-          <h2>Contact</h2>
-          <p>Pour toute question ou assistance, écris-nous à :</p>
-          <p><a href="mailto:nabox3624@gmail.com">nabox3624@gmail.com</a></p>
+          <section>
+            <h2>Contact</h2>
+            <p>Pour toute assistance ou question :</p>
+            <p><a href="mailto:nabox3624@gmail.com"><i class="fas fa-envelope"></i> nabox3624@gmail.com</a></p>
+          </section>
         `
       };
       content.innerHTML = pages[page] || '<p>Page introuvable.</p>';
-      toggleMenu(); // Ferme le menu après chargement de la page
+      toggleMenu(); // Ferme le menu après sélection
     }
   </script>
 </body>
