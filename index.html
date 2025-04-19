@@ -1,103 +1,243 @@
-<!DOCTYPE html><html lang="fr">
+<!DOCTYPE html>
+<html lang="fr">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dashboard Discord</title>
-  <link rel="stylesheet" href="style.css">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <title>Dashboard Interactif Discord</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-  <script>
-    function toggleTheme() {
-      document.body.classList.toggle("dark-theme");
+  <style>
+    /* Styles généraux */
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      transition: background-color 0.3s, color 0.3s;
     }
-  </script>
+    .dark-theme {
+      background-color: #1a1a1a;
+      color: white;
+    }
+    header {
+      background: #007BFF;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+    .theme-toggle {
+      position: fixed;
+      top: 10px;
+      right: 10px;
+      z-index: 1000;
+    }
+    .menu-toggle {
+      position: fixed;
+      top: 10px;
+      left: 10px;
+      background-color: #007BFF;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      padding: 10px;
+      cursor: pointer;
+      z-index: 1000;
+    }
+    .categories {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin: 20px;
+    }
+    .category {
+      background: #fff;
+      border-radius: 10px;
+      margin: 10px;
+      padding: 20px;
+      width: 250px;
+      text-align: center;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .category:hover {
+      transform: scale(1.05);
+      box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+    }
+    .category i {
+      font-size: 30px;
+      color: #007BFF;
+      margin-bottom: 10px;
+    }
+    .category a {
+      display: inline-block;
+      margin-top: 10px;
+      padding: 10px 20px;
+      background: #007BFF;
+      color: white;
+      text-decoration: none;
+      border-radius: 5px;
+    }
+    .category a:hover {
+      background: #0056b3;
+    }
+    .nav-bar {
+      position: fixed;
+      top: 50%;
+      right: 10px;
+      transform: translateY(-50%);
+      background-color: rgba(0, 123, 255, 0.9);
+      border-radius: 5px;
+      padding: 10px;
+      z-index: 1000;
+    }
+    .nav-bar a {
+      display: block;
+      margin: 5px 0;
+      color: white;
+      text-decoration: none;
+      text-align: center;
+      padding: 8px;
+      background-color: #007BFF;
+      border-radius: 50%;
+      font-size: 14px;
+    }
+    .nav-bar a:hover {
+      background-color: #0056b3;
+    }
+    section {
+      display: none;
+      padding: 20px;
+      animation: fadeIn 0.5s ease-in-out;
+    }
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+    section.active {
+      display: block;
+    }
+    .back-btn {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 10px 20px;
+      background: #007BFF;
+      color: white;
+      text-decoration: none;
+      border-radius: 5px;
+    }
+    .back-btn:hover {
+      background: #0056b3;
+    }
+  </style>
 </head>
 <body>
-  <div class="theme-toggle">
-    <button onclick="toggleTheme()"><i class="fas fa-adjust"></i> Changer de thème</button>
+
+<!-- Boutons fixes -->
+<div class="theme-toggle">
+  <button onclick="toggleTheme()">
+    <i class="fas fa-adjust"></i> Thème
+  </button>
+</div>
+<button class="menu-toggle" onclick="toggleMenu()">☰ Menu</button>
+
+<!-- Menu déroulant -->
+<nav style="display: none;">
+  <a href="#features">Fonctionnalités</a>
+  <a href="#commands">Commandes</a>
+  <a href="#servers">Serveurs</a>
+  <a href="#about">À propos</a>
+  <a href="#contact">Contact</a>
+</nav>
+
+<header>
+  <h1>Dashboard Interactif Discord</h1>
+</header>
+
+<!-- Barre latérale de navigation -->
+<div class="nav-bar">
+  <a href="#features" title="Fonctionnalités">F</a>
+  <a href="#commands" title="Commandes">C</a>
+  <a href="#servers" title="Serveurs">S</a>
+  <a href="#about" title="À propos">A</a>
+  <a href="#contact" title="Contact">T</a>
+</div>
+
+<!-- Catégories interactives -->
+<div class="categories">
+  <div class="category" onclick="showCategory('login')">
+    <i class="fas fa-sign-in-alt"></i>
+    <h3>Connexion</h3>
+    <a href="#">Explorer</a>
   </div>
-  <header class="hero">
-    <div class="hero-content">
-      <h1>Gère ton bot Discord comme un boss</h1>
-      <p>Un dashboard moderne, responsive et puissant pour tout contrôler facilement</p>
-      <a href="#features" class="button large">Explorer les fonctionnalités</a>
-    </div>
-  </header>
-  <nav class="navbar">
-    <ul>
-      <li><a href="#features">Fonctionnalités</a></li>
-      <li><a href="#commands">Commandes</a></li>
-      <li><a href="#servers">Serveurs</a></li>
-      <li><a href="#about">À propos</a></li>
-      <li><a href="#contact">Contact</a></li>
-      <li><a class="button small" href="https://discord.com/api/oauth2/authorize?client_id=TON_CLIENT_ID&redirect_uri=https%3A%2F%2Fspyko3105.github.io%2FDashboard%2F&response_type=code&scope=identify%20guilds&permissions=8"><i class="fab fa-discord"></i> Connexion</a></li>
-    </ul>
-  </nav>
-  <main>
-    <section id="features" class="section">
-      <h2>Fonctionnalités principales</h2>
-      <div class="grid">
-        <div class="card">
-          <i class="fas fa-sliders-h"></i>
-          <h3>Gestion de config</h3>
-          <p>Modifie les paramètres du bot en temps réel.</p>
-        </div>
-        <div class="card">
-          <i class="fas fa-user-shield"></i>
-          <h3>Permissions</h3>
-          <p>Défini qui a accès à quoi sur tes serveurs.</p>
-        </div>
-        <div class="card">
-          <i class="fas fa-database"></i>
-          <h3>Logs & historiques</h3>
-          <p>Consulte les actions et les logs de modération.</p>
-        </div>
-        <div class="card">
-          <i class="fas fa-bell"></i>
-          <h3>Notifs personnalisées</h3>
-          <p>Ajoute des alertes automatiques sur ton serveur.</p>
-        </div>
-      </div>
-    </section>
-    <section id="commands" class="section">
-      <h2>Liste des commandes</h2>
-      <div class="card">
-        <ul>
-          <li><code>/kick</code> - Kick un membre</li>
-          <li><code>/ban</code> - Ban un membre</li>
-          <li><code>/warn</code> - Avertissement</li>
-          <li><code>/userinfo</code> - Infos d'un user</li>
-        </ul>
-      </div>
-    </section>
-    <section id="servers" class="section">
-      <h2>Serveurs connectés</h2>
-      <div class="card">
-        <p>Tu es connecté à 3 serveurs. Gère-les ici.</p>
-        <ul>
-          <li>SpykoLand</li>
-          <li>Serveur RP</li>
-          <li>TestBot HQ</li>
-        </ul>
-      </div>
-    </section>
-    <section id="about" class="section">
-      <h2>À propos du projet</h2>
-      <div class="card">
-        <p>Dashboard créé par Spyko avec amour, pour que les admins aient enfin une interface stylée et simple pour tout gérer sans se prendre la tête.</p>
-      </div>
-    </section>
-    <section id="contact" class="section">
-      <h2>Contact</h2>
-      <div class="card">
-        <p>Besoin d'aide ? Contacte-moi sur Discord : <strong>Spyko#3105</strong></p>
-      </div>
-    </section>
-  </main>
-  <footer class="footer">
-    <p>&copy; 2025 Spyko3105. Tous droits réservés.</p>
-  </footer>
+  <div class="category" onclick="showCategory('features')">
+    <i class="fas fa-sliders-h"></i>
+    <h3>Fonctionnalités</h3>
+    <a href="#">Explorer</a>
+  </div>
+  <div class="category" onclick="showCategory('commands')">
+    <i class="fas fa-terminal"></i>
+    <h3>Commandes</h3>
+    <a href="#">Explorer</a>
+  </div>
+  <div class="category" onclick="showCategory('servers')">
+    <i class="fas fa-server"></i>
+    <h3>Serveurs</h3>
+    <a href="#">Explorer</a>
+  </div>
+</div>
+
+<!-- Sections interactives -->
+<section id="login">
+  <h2>Connexion à Discord</h2>
+  <p>Connectez-vous facilement via Discord pour accéder à votre dashboard.</p>
+  <a href="https://discord.com/api/oauth2/authorize?client_id=TON_CLIENT_ID&redirect_uri=https%3A%2F%2Fspyko3105.github.io%2FDashboard%2F&response_type=code&scope=identify%20guilds&permissions=8" class="back-btn">Se connecter</a>
+  <a href="#" class="back-btn" onclick="goBack()">Retour</a>
+</section>
+
+<section id="features">
+  <h2>Fonctionnalités</h2>
+  <p>Découvrez les outils puissants de votre bot.</p>
+  <a href="#" class="back-btn" onclick="goBack()">Retour</a>
+</section>
+
+<section id="commands">
+  <h2>Commandes</h2>
+  <p>Liste des commandes utiles de votre bot.</p>
+  <a href="#" class="back-btn" onclick="goBack()">Retour</a>
+</section>
+
+<section id="servers">
+  <h2>Serveurs</h2>
+  <p>Gérez vos serveurs Discord directement ici.</p>
+  <a href="#" class="back-btn" onclick="goBack()">Retour</a>
+</section>
+
+<script>
+  function toggleTheme() {
+    document.body.classList.toggle("dark-theme");
+  }
+
+  function toggleMenu() {
+    const menu = document.querySelector("nav");
+    menu.style.display = menu.style.display === "block" ? "none" : "block";
+  }
+
+  function showCategory(id) {
+    document.querySelectorAll('section').forEach(section => {
+      section.classList.remove('active');
+    });
+    document.getElementById(id).classList.add('active');
+    document.querySelector('.categories').style.display = 'none';
+  }
+
+  function goBack() {
+    document.querySelectorAll('section').forEach(section => {
+      section.classList.remove('active');
+    });
+    document.querySelector('.categories').style.display = 'flex';
+  }
+</script>
+
 </body>
 </html>
