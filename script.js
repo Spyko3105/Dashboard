@@ -1,90 +1,123 @@
-// Gestion du changement de thème (clair / sombre)
-function toggleTheme() {
-  document.body.classList.toggle('dark-theme');
-  document.body.classList.toggle('light-theme');
+// ---------- Loader ----------
+// Attend le chargement complet de la fenêtre puis masque le loader avec un fondu.
+window.addEventListener('load', function () {
+  const loader = document.getElementById('loader');
+  loader.style.opacity = "0";
+  setTimeout(() => {
+    loader.style.display = "none";
+  }, 500);
+});
+
+// ---------- Navigation entre les Pages ----------
+// Fonction qui affiche la page correspondante et masque les autres.
+function showPage(pageId) {
+  const pages = document.querySelectorAll('.page');
+  pages.forEach(page => {
+    if (page.id === pageId) {
+      page.classList.add('active');
+      page.focus();
+    } else {
+      page.classList.remove('active');
+    }
+  });
 }
 
-// Gestion du menu (affichage/masquage du menu sur mobile)
-function toggleMenu() {
-  const menu = document.querySelector('nav');
-  menu.classList.toggle('open');
+// Ajoute un écouteur pour chaque lien de navigation (élément avec data-page).
+document.querySelectorAll('a[data-page]').forEach(link => {
+  link.addEventListener('click', function (e) {
+    e.preventDefault();
+    const targetPage = this.getAttribute('data-page');
+    showPage(targetPage);
+    window.location.hash = targetPage;
+    // Ferme automatiquement le volet si ouvert lors d'un clic.
+    sidebar.classList.remove('active');
+  });
+});
+
+// ---------- Toggle du Thème (mode sombre / clair) ----------
+const themeToggle = document.getElementById('themeToggle');
+function updateThemeButton() {
+  if (document.body.classList.contains('light-mode')) {
+    themeToggle.textContent = "☀️"; // Mode clair affiché : soleil.
+  } else {
+    themeToggle.textContent = "🌙"; // Mode sombre affiché : lune.
+  }
+}
+themeToggle.addEventListener('click', function () {
+  document.body.classList.toggle('light-mode');
+  updateThemeButton();
+});
+updateThemeButton(); // Initialisation
+
+// ---------- Bouton "Retour en haut" ----------
+const scrollToTopBtn = document.getElementById('scrollToTop');
+window.addEventListener('scroll', function () {
+  if (window.pageYOffset > 300) {
+    scrollToTopBtn.style.display = "flex";
+  } else {
+    scrollToTopBtn.style.display = "none";
+  }
+});
+scrollToTopBtn.addEventListener('click', function () {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+});
+
+// ---------- Intégration des API ----------
+// API pour récupérer la météo via wttr.in et l'heure via worldtimeapi.org.
+const weatherDisplay = document.getElementById('weatherDisplay');
+const refreshWeatherBtn = document.getElementById('refreshWeather');
+const timeDisplay = document.getElementById('timeDisplay');
+const refreshTimeBtn = document.getElementById('refreshTime');
+
+async function fetchWeather() {
+  try {
+    // wttr.in renvoie directement un texte avec un format court.
+    const response = await fetch('https://wttr.in/?format=3', { cache: "no-cache" });
+    const weatherText = await response.text();
+    weatherDisplay.textContent = weatherText;
+  } catch (error) {
+    weatherDisplay.textContent = "Erreur lors du chargement de la météo.";
+  }
 }
 
-// Chargement des pages dynamiques dans le contenu
-function loadPage(page) {
-  const content = document.getElementById('content');
-  const pages = {
-    home: `
-      <section>
-        <h2>Ajouter le bot</h2>
-        <div style="text-align: center;">
-          <img src="https://via.placeholder.com/150" alt="Image du Bot" style="border-radius: 50%; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
-          <h3>Ton Bot Discord</h3>
-          <p>Gérez facilement votre bot Discord à partir de cette interface moderne.</p>
-          <a href="https://discord.com/oauth2/authorize?client_id=1361826455406772408&permissions=8&integration_type=0&scope=bot"
-            style="background: var(--primary-color); color: white; padding: 10px 20px; border-radius: 5px; text-decoration: none;">Ajouter le bot</a>
-        </div>
-      </section>
-    `,
-    features: `
-      <section>
-        <h2>Fonctionnalités</h2>
-        <p>Explorez les outils avancés :</p>
-        <div class="grid">
-          <div class="card">
-            <i class="fas fa-sliders-h"></i>
-            <h3>Configuration</h3>
-            <p>Modifiez les paramètres du bot à tout moment.</p>
-          </div>
-          <div class="card">
-            <i class="fas fa-user-shield"></i>
-            <h3>Permissions</h3>
-            <p>Définissez qui a accès à quoi sur vos serveurs.</p>
-          </div>
-          <div class="card">
-            <i class="fas fa-database"></i>
-            <h3>Logs & Historique</h3>
-            <p>Consultez les actions effectuées sur vos serveurs.</p>
-          </div>
-        </div>
-      </section>
-    `,
-    commands: `
-      <section>
-        <h2>Commandes</h2>
-        <p>Utilisez ces commandes avec votre bot :</p>
-        <ul>
-          <li><i class="fas fa-user-times"></i> <code>/ban</code> - Bannir un membre</li>
-          <li><i class="fas fa-ban"></i> <code>/kick</code> - Expulser un membre</li>
-          <li><i class="fas fa-bell"></i> <code>/warn</code> - Avertir un membre</li>
-          <li><i class="fas fa-terminal"></i> <code>/userinfo</code> - Informations sur un membre</li>
-        </ul>
-      </section>
-    `,
-    servers: `
-      <section>
-        <h2>Serveurs</h2>
-        <p>Surveillez l'activité des serveurs :</p>
-        <ul>
-          <li><i class="fas fa-server"></i> Serveur Principal</li>
-          <li><i class="fas fa-users"></i> Communauté Discord</li>
-        </ul>
-      </section>
-    `,
-    about: `
-      <section>
-        <h2>À propos</h2>
-        <p>Ce dashboard est conçu pour fournir une interface simple, moderne et complète.</p>
-      </section>
-    `,
-    contact: `
-      <section>
-        <h2>Contact</h2>
-        <p>Pour toute assistance ou question :</p>
-        <p><a href="mailto:nabox3624@gmail.com"><i class="fas fa-envelope"></i> nabox3624@gmail.com</a></p>
-      </section>
-    `
-  };
-  content.innerHTML = pages[page] || '<p>Page introuvable.</p>';
-  toggleMenu();  // Fermer le menu après avoir chargé la page
+async function fetchTime() {
+  try {
+    const response = await fetch('https://worldtimeapi.org/api/timezone/Europe/Paris', { cache: "no-cache" });
+    const data = await response.json();
+    // Affiche uniquement l'heure (HH:MM:SS)
+    timeDisplay.textContent = "Heure à Paris : " + data.datetime.substring(11, 19);
+  } catch (error) {
+    timeDisplay.textContent = "Erreur lors du chargement de l'heure.";
+  }
 }
+
+// Boutons de rafraîchissement des données
+refreshWeatherBtn.addEventListener('click', fetchWeather);
+refreshTimeBtn.addEventListener('click', fetchTime);
+
+// Lorsque la page API est activée, lancer les mises à jour
+document.querySelector('a[data-page="api"]').addEventListener('click', function () {
+  fetchWeather();
+  fetchTime();
+});
+
+// ---------- Gestion de la Sidebar (Volet déroulant) ----------
+const sidebar = document.getElementById('sidebar');
+const sidebarToggle = document.getElementById('sidebarToggle');
+const closeSidebar = document.getElementById('closeSidebar');
+
+sidebarToggle.addEventListener('click', function () {
+  sidebar.classList.add('active');
+});
+closeSidebar.addEventListener('click', function () {
+  sidebar.classList.remove('active');
+});
+
+// ---------- Chargement de la Page Basé sur le Hash ----------
+// Si un hash est présent dans l'URL, afficher la page correspondante.
+window.addEventListener('DOMContentLoaded', function () {
+  const hash = window.location.hash.substring(1);
+  if (hash) {
+    showPage(hash);
+  }
+});
