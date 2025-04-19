@@ -190,14 +190,14 @@
     }
 
     /* ----------------------------------------------------- */
-    /* SECTIONS AVEC ANIMATION INDIVIDUELLE (SLIDE-IN) */
+    /* SECTIONS AVEC ANIMATION INDIVIDUELLE (SLIDE-IN) ET COINS ARRONDIS */
     /* ----------------------------------------------------- */
     .page section {
       background: var(--section-bg-dark);
       padding: 25px;
       margin-bottom: 25px;
       border: 1px solid var(--highlight-color);
-      border-radius: 8px;
+      border-radius: 15px;
       box-shadow: 0 0 15px rgba(255, 222, 0, 0.5);
       animation: fadeSlideIn 0.8s forwards;
     }
@@ -229,7 +229,7 @@
     form textarea {
       padding: 12px;
       border: none;
-      border-radius: 4px;
+      border-radius: 8px;
       background: #222;
       color: var(--text-color-dark);
       font-size: 1rem;
@@ -248,7 +248,7 @@
     form button {
       padding: 12px;
       border: none;
-      border-radius: 4px;
+      border-radius: 8px;
       background: var(--secondary-color);
       color: #fff;
       font-size: 1.1rem;
@@ -264,24 +264,63 @@
     }
 
     /* ----------------------------------------------------- */
-    /* NOUVELLE PAGE EMBED (MEDIA) - pour enrichir le contenu */
+    /* PAGE MEDIA - GALLERY D'IMAGES & SECTION VIDÉO CACHÉE */
     /* ----------------------------------------------------- */
     .embed-container {
       position: relative;
       width: 100%;
-      padding-bottom: 56.25%; /* 16:9 ratio */
+      padding-bottom: 56.25%; /* Ratio 16:9 */
       height: 0;
       overflow: hidden;
       border: 2px solid var(--highlight-color);
-      border-radius: 8px;
+      border-radius: 15px;
       box-shadow: 0 0 15px rgba(255, 222, 0, 0.5);
+      margin-bottom: 20px;
     }
     .embed-container iframe {
       position: absolute;
-      top: 0; left: 0;
+      top: 0;
+      left: 0;
       width: 100%;
       height: 100%;
       border: 0;
+    }
+    /* Galerie d'images */
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+    .gallery img {
+      width: 100%;
+      border-radius: 15px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.3);
+      transition: transform 0.3s ease;
+    }
+    .gallery img:hover {
+      transform: scale(1.05);
+    }
+    /* Section vidéo cachée */
+    .hidden-video {
+      display: none;
+      margin-top: 20px;
+    }
+    .hidden-video.active {
+      display: block;
+    }
+    .toggle-video-btn {
+      padding: 10px 15px;
+      border: none;
+      border-radius: 8px;
+      background: var(--accent-color);
+      color: #fff;
+      cursor: pointer;
+      transition: background 0.3s ease;
+      margin-bottom: 10px;
+    }
+    .toggle-video-btn:hover {
+      background: var(--secondary-color);
     }
 
     /* ----------------------------------------------------- */
@@ -344,7 +383,7 @@
     }
 
     /* ----------------------------------------------------- */
-    /* PARTICULES NÉON ANIMÉES pour renfort futuriste */
+    /* PARTICULES NÉON ANIMÉES pour un effet futuriste */
     /* ----------------------------------------------------- */
     .particle {
       position: absolute;
@@ -429,13 +468,26 @@
       </section>
     </div>
     
-    <!-- Page Media (Embed) -->
+    <!-- Page Media: Galerie d'images + Vidéo cachée -->
     <div id="media" class="page" tabindex="0">
       <section aria-labelledby="mediaTitle">
         <h2 id="mediaTitle">Media</h2>
-        <p>Exemple d'embed vidéo. Remplacez l'iframe par le contenu souhaité.</p>
-        <div class="embed-container">
-          <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="Exemple d'Embed Vidéo" allowfullscreen></iframe>
+        <p>Découvrez notre galerie d'images et, si vous le souhaitez, affichez la vidéo cachée.</p>
+        <!-- Galerie d'images supplémentaires -->
+        <div class="gallery">
+          <img src="https://via.placeholder.com/300x200?text=Image+1" alt="Image 1">
+          <img src="https://via.placeholder.com/300x200?text=Image+2" alt="Image 2">
+          <img src="https://via.placeholder.com/300x200?text=Image+3" alt="Image 3">
+          <img src="https://via.placeholder.com/300x200?text=Image+4" alt="Image 4">
+        </div>
+        <!-- Bouton de basculement pour vidéo cachée -->
+        <button class="toggle-video-btn" id="toggleVideoBtn">Afficher la vidéo cachée</button>
+        <!-- Section vidéo cachée -->
+        <div class="hidden-video" id="hiddenVideo">
+          <div class="embed-container">
+            <!-- La vidéo ci-dessous utilise l'URL indiquée -->
+            <iframe src="https://photos.app.goo.gl/VUP5DCRvtq3kTxLh8" title="Vidéo Cachée" allowfullscreen></iframe>
+          </div>
         </div>
       </section>
     </div>
@@ -444,7 +496,7 @@
     <div id="contact" class="page" tabindex="0">
       <section aria-labelledby="contactTitle">
         <h2 id="contactTitle">Contact</h2>
-        <p>Envoyez-nous vos retours ou questions via le formulaire ci-dessous :</p>
+        <p>Envoyez-nous vos retours ou questions via le formulaire ci-dessous :</p>
         <form id="contactForm" action="mailto:nabox3624@gmail.com" method="post" enctype="text/plain" aria-labelledby="contactFormLabel">
           <p id="contactFormLabel" class="visually-hidden">Formulaire de Contact</p>
           <label for="name">Nom :</label>
@@ -467,9 +519,9 @@
     <p>&copy; 2025 Dashboard Bot Discord. Tous droits réservés.</p>
   </footer>
   
-  <!-- JAVASCRIPT pour Loader, Navigation, Thème et Scroll To Top -->
+  <!-- JAVASCRIPT pour Loader, Navigation, Thème, Toggle Vidéo et Scroll To Top -->
   <script>
-    // Cacher le loader une fois la page entièrement chargée
+    // Cacher le loader une fois que la page est entièrement chargée
     window.addEventListener('load', function() {
       const loader = document.getElementById('loader');
       loader.style.opacity = "0";
@@ -502,7 +554,6 @@
     // Gestion du changement de thème et bouton à emoji
     const themeToggle = document.getElementById('themeToggle');
     function updateThemeButton() {
-      // Si le body a la classe light-mode, on affiche l'emoji soleil (☀️) ou sinon la lune (🌙)
       if(document.body.classList.contains('light-mode')) {
         themeToggle.textContent = "☀️";
       } else {
@@ -513,7 +564,6 @@
       document.body.classList.toggle('light-mode');
       updateThemeButton();
     });
-    // Initialisation du bouton thème
     updateThemeButton();
     
     // Bouton Retour en haut
@@ -529,7 +579,19 @@
       window.scrollTo({ top: 0, behavior: 'smooth' });
     });
     
-    // Afficher la page correspondant au hash si présent lors du chargement
+    // Gestion du toggle de la vidéo cachée
+    const toggleVideoBtn = document.getElementById('toggleVideoBtn');
+    const hiddenVideo = document.getElementById('hiddenVideo');
+    toggleVideoBtn.addEventListener('click', function() {
+      hiddenVideo.classList.toggle('active');
+      if(hiddenVideo.classList.contains('active')){
+        toggleVideoBtn.textContent = "Masquer la vidéo cachée";
+      } else {
+        toggleVideoBtn.textContent = "Afficher la vidéo cachée";
+      }
+    });
+    
+    // Afficher la page correspondant au hash si présent au chargement
     window.addEventListener('DOMContentLoaded', function() {
       const hash = window.location.hash.substring(1);
       if(hash) {
