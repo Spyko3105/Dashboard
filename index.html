@@ -1,28 +1,177 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Dashboard</title>
-  <link rel="stylesheet" href="style.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: linear-gradient(135deg, #5D7CFF, #28B6A3);
+            color: white;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            margin: 0;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        .sidebar {
+            background-color: rgba(0, 0, 0, 0.5);
+            border-radius: 10px;
+            padding: 20px;
+            width: 250px;
+            height: 100%;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .sidebar h2 {
+            margin-bottom: 20px;
+            color: #fff;
+        }
+
+        .sidebar ul {
+            list-style: none;
+        }
+
+        .sidebar ul li {
+            margin: 10px 0;
+        }
+
+        .sidebar ul li a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 18px;
+            transition: color 0.3s;
+        }
+
+        .sidebar ul li a:hover {
+            color: #28B6A3;
+        }
+
+        .content {
+            flex: 1;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .content h1 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            margin: 15px;
+            border-radius: 10px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+
+        .card:hover {
+            transform: scale(1.05);
+        }
+
+        .card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+
+        .card p {
+            font-size: 1.2rem;
+        }
+
+        .button {
+            background-color: #28B6A3;
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+
+        .button:hover {
+            background-color: #5D7CFF;
+        }
+
+        .footer {
+            text-align: center;
+            font-size: 14px;
+            color: #ddd;
+            position: absolute;
+            bottom: 10px;
+            width: 100%;
+        }
+    </style>
 </head>
 <body>
-  <div class="dashboard">
-    <aside class="sidebar">
-      <h2>Mon Bot</h2>
-      <nav>
-        <ul>
-          <li><a href="#">Accueil</a></li>
-          <li><a href="#">Configuration</a></li>
-          <li><a href="#">Utilisateurs</a></li>
-          <li><a href="#">Logs</a></li>
-        </ul>
-      </nav>
-    </aside>
-    <main class="main-content">
-      <h1>Bienvenue sur le Dashboard !</h1>
-      <p>Gère ton bot Discord directement depuis ici.</p>
-    </main>
-  </div>
+    <div class="container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <h2>Menu</h2>
+            <ul>
+                <li><a href="#">Dashboard</a></li>
+                <li><a href="#">Settings</a></li>
+                <li><a href="#">Statistics</a></li>
+                <li><a href="#">Logs</a></li>
+                <li><a href="#">Logout</a></li>
+            </ul>
+        </div>
+
+        <!-- Main Content -->
+        <div class="content">
+            <h1>Welcome to Your Dashboard!</h1>
+            <div class="card">
+                <h3>Quick Stats</h3>
+                <p>Some quick stats or information from your bot or server can go here.</p>
+            </div>
+            <div class="card">
+                <h3>Server Health</h3>
+                <p>Check the health of your system or bot, monitor uptime, or track performance here.</p>
+            </div>
+            <div class="card">
+                <h3>Manage Bot</h3>
+                <button class="button">Start Bot</button>
+                <button class="button">Stop Bot</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        <p>&copy; 2025 Spyko Dashboard - All Rights Reserved</p>
+    </div>
+
+    <script>
+        // Animation or Interactivity - Example
+        const buttons = document.querySelectorAll('.button');
+        buttons.forEach(button => {
+            button.addEventListener('click', () => {
+                alert("Button clicked!");
+            });
+        });
+    </script>
 </body>
 </html>
