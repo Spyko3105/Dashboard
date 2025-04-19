@@ -12,34 +12,71 @@
       font-family: Arial, sans-serif;
       transition: background-color 0.3s, color 0.3s;
     }
-    .dark-theme {
+    body.light-theme {
+      background-color: #f4f4f9;
+      color: black;
+    }
+    body.dark-theme {
       background-color: #1a1a1a;
       color: white;
     }
+
     header {
       background: #007BFF;
       color: white;
       padding: 20px;
       text-align: center;
     }
-    .theme-toggle {
+
+    /* Boutons fixes */
+    .theme-toggle, .menu-toggle {
       position: fixed;
-      top: 10px;
-      right: 10px;
       z-index: 1000;
-    }
-    .menu-toggle {
-      position: fixed;
-      top: 10px;
-      left: 10px;
       background-color: #007BFF;
       color: white;
       border: none;
       border-radius: 5px;
       padding: 10px;
       cursor: pointer;
-      z-index: 1000;
     }
+    .theme-toggle {
+      top: 10px;
+      right: 10px;
+    }
+    .menu-toggle {
+      top: 10px;
+      left: 10px;
+    }
+    .theme-toggle:hover, .menu-toggle:hover {
+      background-color: #0056b3;
+    }
+
+    /* Menu interactif */
+    nav {
+      display: none;
+      position: fixed;
+      top: 50px;
+      left: 10px;
+      background-color: white;
+      box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+      padding: 10px;
+      border-radius: 5px;
+      animation: fadeIn 0.3s ease-in-out;
+    }
+    nav a {
+      display: block;
+      color: #007BFF;
+      text-decoration: none;
+      margin: 10px 0;
+      padding: 10px;
+      border-radius: 5px;
+      transition: background-color 0.3s;
+    }
+    nav a:hover {
+      background-color: #f1f1f1;
+    }
+
+    /* Catégories */
     .categories {
       display: flex;
       flex-wrap: wrap;
@@ -73,169 +110,78 @@
       color: white;
       text-decoration: none;
       border-radius: 5px;
+      transition: background-color 0.3s;
     }
     .category a:hover {
       background: #0056b3;
     }
-    .nav-bar {
-      position: fixed;
-      top: 50%;
-      right: 10px;
-      transform: translateY(-50%);
-      background-color: rgba(0, 123, 255, 0.9);
-      border-radius: 5px;
-      padding: 10px;
-      z-index: 1000;
+
+    /* Transition des thèmes */
+    .light-theme nav {
+      background-color: white;
     }
-    .nav-bar a {
-      display: block;
-      margin: 5px 0;
+    .dark-theme nav {
+      background-color: #333;
       color: white;
-      text-decoration: none;
-      text-align: center;
-      padding: 8px;
-      background-color: #007BFF;
-      border-radius: 50%;
-      font-size: 14px;
     }
-    .nav-bar a:hover {
-      background-color: #0056b3;
+
+    .light-theme nav a {
+      color: #007BFF;
     }
-    section {
-      display: none;
-      padding: 20px;
-      animation: fadeIn 0.5s ease-in-out;
-    }
-    @keyframes fadeIn {
-      from {
-        opacity: 0;
-      }
-      to {
-        opacity: 1;
-      }
-    }
-    section.active {
-      display: block;
-    }
-    .back-btn {
-      display: inline-block;
-      margin-top: 20px;
-      padding: 10px 20px;
-      background: #007BFF;
+    .dark-theme nav a {
       color: white;
-      text-decoration: none;
-      border-radius: 5px;
-    }
-    .back-btn:hover {
-      background: #0056b3;
     }
   </style>
 </head>
-<body>
+<body class="light-theme">
 
 <!-- Boutons fixes -->
-<div class="theme-toggle">
-  <button onclick="toggleTheme()">
-    <i class="fas fa-adjust"></i> Thème
-  </button>
-</div>
+<button class="theme-toggle" onclick="toggleTheme()">Changer de thème</button>
 <button class="menu-toggle" onclick="toggleMenu()">☰ Menu</button>
 
-<!-- Menu déroulant -->
-<nav style="display: none;">
-  <a href="#features">Fonctionnalités</a>
-  <a href="#commands">Commandes</a>
-  <a href="#servers">Serveurs</a>
-  <a href="#about">À propos</a>
-  <a href="#contact">Contact</a>
+<!-- Menu interactif -->
+<nav>
+  <a href="#features" onclick="loadPage('features')">Fonctionnalités</a>
+  <a href="#commands" onclick="loadPage('commands')">Commandes</a>
+  <a href="#servers" onclick="loadPage('servers')">Serveurs</a>
+  <a href="#about" onclick="loadPage('about')">À propos</a>
+  <a href="#contact" onclick="loadPage('contact')">Contact</a>
 </nav>
 
 <header>
   <h1>Dashboard Interactif Discord</h1>
 </header>
 
-<!-- Barre latérale de navigation -->
-<div class="nav-bar">
-  <a href="#features" title="Fonctionnalités">F</a>
-  <a href="#commands" title="Commandes">C</a>
-  <a href="#servers" title="Serveurs">S</a>
-  <a href="#about" title="À propos">A</a>
-  <a href="#contact" title="Contact">T</a>
+<!-- Contenu dynamique -->
+<div id="content">
+  <p>Bienvenue sur le Dashboard ! Cliquez sur une catégorie pour commencer.</p>
 </div>
-
-<!-- Catégories interactives -->
-<div class="categories">
-  <div class="category" onclick="showCategory('login')">
-    <i class="fas fa-sign-in-alt"></i>
-    <h3>Connexion</h3>
-    <a href="#">Explorer</a>
-  </div>
-  <div class="category" onclick="showCategory('features')">
-    <i class="fas fa-sliders-h"></i>
-    <h3>Fonctionnalités</h3>
-    <a href="#">Explorer</a>
-  </div>
-  <div class="category" onclick="showCategory('commands')">
-    <i class="fas fa-terminal"></i>
-    <h3>Commandes</h3>
-    <a href="#">Explorer</a>
-  </div>
-  <div class="category" onclick="showCategory('servers')">
-    <i class="fas fa-server"></i>
-    <h3>Serveurs</h3>
-    <a href="#">Explorer</a>
-  </div>
-</div>
-
-<!-- Sections interactives -->
-<section id="login">
-  <h2>Connexion à Discord</h2>
-  <p>Connectez-vous facilement via Discord pour accéder à votre dashboard.</p>
-  <a href="https://discord.com/api/oauth2/authorize?client_id=TON_CLIENT_ID&redirect_uri=https%3A%2F%2Fspyko3105.github.io%2FDashboard%2F&response_type=code&scope=identify%20guilds&permissions=8" class="back-btn">Se connecter</a>
-  <a href="#" class="back-btn" onclick="goBack()">Retour</a>
-</section>
-
-<section id="features">
-  <h2>Fonctionnalités</h2>
-  <p>Découvrez les outils puissants de votre bot.</p>
-  <a href="#" class="back-btn" onclick="goBack()">Retour</a>
-</section>
-
-<section id="commands">
-  <h2>Commandes</h2>
-  <p>Liste des commandes utiles de votre bot.</p>
-  <a href="#" class="back-btn" onclick="goBack()">Retour</a>
-</section>
-
-<section id="servers">
-  <h2>Serveurs</h2>
-  <p>Gérez vos serveurs Discord directement ici.</p>
-  <a href="#" class="back-btn" onclick="goBack()">Retour</a>
-</section>
 
 <script>
+  /* Gestion des thèmes */
   function toggleTheme() {
-    document.body.classList.toggle("dark-theme");
+    document.body.classList.toggle('dark-theme');
+    document.body.classList.toggle('light-theme');
   }
 
+  /* Menu interactif */
   function toggleMenu() {
-    const menu = document.querySelector("nav");
-    menu.style.display = menu.style.display === "block" ? "none" : "block";
+    const menu = document.querySelector('nav');
+    menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
   }
 
-  function showCategory(id) {
-    document.querySelectorAll('section').forEach(section => {
-      section.classList.remove('active');
-    });
-    document.getElementById(id).classList.add('active');
-    document.querySelector('.categories').style.display = 'none';
-  }
-
-  function goBack() {
-    document.querySelectorAll('section').forEach(section => {
-      section.classList.remove('active');
-    });
-    document.querySelector('.categories').style.display = 'flex';
+  /* Chargement des pages dynamiques */
+  function loadPage(page) {
+    const content = document.getElementById('content');
+    const pages = {
+      features: '<h2>Fonctionnalités</h2><p>Description des fonctionnalités ici.</p>',
+      commands: '<h2>Commandes</h2><p>Liste des commandes ici.</p>',
+      servers: '<h2>Serveurs</h2><p>Gestion des serveurs ici.</p>',
+      about: '<h2>À propos</h2><p>Informations sur le projet ici.</p>',
+      contact: '<h2>Contact</h2><p>Contactez-nous ici.</p>'
+    };
+    content.innerHTML = pages[page] || '<p>Page introuvable.</p>';
+    toggleMenu(); // Ferme le menu après sélection
   }
 </script>
 
