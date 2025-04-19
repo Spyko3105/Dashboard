@@ -4,153 +4,294 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Dashboard Bot Discord</title>
-  <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <link href="https://fonts.googleapis.com/css2?family=Orbitron&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      transition: background 0.5s;
+    }
+
+    .light-theme {
+      background: linear-gradient(135deg, #f0f4ff, #e0eafc);
+      color: #222;
+    }
+
+    .dark-theme {
+      background: linear-gradient(135deg, #1f1f1f, #2c3e50);
+      color: #f0f0f0;
+    }
+
+    header.header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
+      background: linear-gradient(90deg, #6a11cb, #2575fc);
+      color: white;
+      border-radius: 0 0 1.5rem 1.5rem;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .logo {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.5rem;
+    }
+
+    .controls button {
+      background: none;
+      border: none;
+      color: white;
+      font-size: 1.2rem;
+      margin-left: 1rem;
+      cursor: pointer;
+      transition: transform 0.2s ease;
+    }
+
+    .controls button:hover {
+      transform: scale(1.2);
+    }
+
+    nav.menu {
+      background: #ffffff10;
+      backdrop-filter: blur(8px);
+      padding: 1rem;
+      border-radius: 1rem;
+      margin: 1rem;
+      transition: all 0.3s ease;
+    }
+
+    nav.menu ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    nav.menu li {
+      margin: 0.5rem 0;
+    }
+
+    nav.menu a {
+      text-decoration: none;
+      color: inherit;
+      font-weight: 600;
+      padding: 0.8rem 1.2rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      border-radius: 2rem;
+      transition: background 0.3s;
+    }
+
+    nav.menu a:hover {
+      background: linear-gradient(90deg, #2575fc, #6a11cb);
+      color: white;
+    }
+
+    .content {
+      padding: 2rem;
+      animation: fadeIn 0.6s ease-in-out;
+    }
+
+    .home {
+      text-align: center;
+    }
+
+    .home-info {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      margin-top: 2rem;
+      gap: 2rem;
+    }
+
+    .bot-image {
+      width: 120px;
+      border-radius: 50%;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    }
+
+    .home-text {
+      max-width: 500px;
+      text-align: left;
+    }
+
+    .btn-primary {
+      background: linear-gradient(90deg, #2575fc, #6a11cb);
+      color: white;
+      border: none;
+      padding: 0.75rem 1.5rem;
+      border-radius: 2rem;
+      cursor: pointer;
+      font-size: 1rem;
+      margin-top: 1rem;
+      transition: background 0.3s ease;
+    }
+
+    .btn-primary:hover {
+      background: linear-gradient(90deg, #6a11cb, #2575fc);
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+
+    .feature {
+      background: white;
+      border-radius: 1.5rem;
+      padding: 1rem;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease;
+    }
+
+    .feature:hover {
+      transform: translateY(-5px);
+    }
+
+    .feature i {
+      font-size: 2rem;
+      color: #2575fc;
+    }
+
+    .feature button {
+      margin-top: 1rem;
+      padding: 0.5rem 1rem;
+      background: #2575fc;
+      border: none;
+      color: white;
+      border-radius: 1rem;
+      cursor: pointer;
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0, 0, 0, 0.5);
+    }
+
+    .modal-content {
+      background-color: #fff;
+      margin: 10% auto;
+      padding: 2rem;
+      border-radius: 1rem;
+      max-width: 500px;
+      animation: zoomIn 0.3s ease;
+    }
+
+    .close {
+      float: right;
+      font-size: 1.5rem;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes zoomIn {
+      from { transform: scale(0.7); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    @media screen and (max-width: 768px) {
+      .home-info {
+        flex-direction: column;
+      }
+
+      nav.menu {
+        margin: 0.5rem;
+      }
+    }
+  </style>
 </head>
 <body class="light-theme">
 
-  <!-- Header - Menu & Thème -->
   <header class="header">
     <div class="logo">Discord Bot Dashboard</div>
     <div class="controls">
       <button class="menu-toggle" onclick="toggleMenu()">
-        <i class="fas fa-bars"></i> Menu
+        <i class="fas fa-bars"></i>
       </button>
       <button class="theme-toggle" onclick="toggleTheme()">
-        <i class="fas fa-sun"></i> Thème
+        <i class="fas fa-sun"></i>
       </button>
     </div>
   </header>
 
-  <!-- Menu Latéral -->
   <nav id="menu" class="menu">
     <ul>
       <li><a href="#home" onclick="loadPage('home')"><i class="fas fa-home"></i> Accueil</a></li>
-      <li><a href="#features" onclick="loadPage('features')"><i class="fas fa-cogs"></i> Fonctionnalités</a></li>
       <li><a href="#commands" onclick="loadPage('commands')"><i class="fas fa-terminal"></i> Commandes</a></li>
       <li><a href="#servers" onclick="loadPage('servers')"><i class="fas fa-server"></i> Serveurs</a></li>
+      <li><a href="#settings" onclick="loadPage('settings')"><i class="fas fa-sliders-h"></i> Configuration</a></li>
+      <li><a href="#permissions" onclick="loadPage('permissions')"><i class="fas fa-users-cog"></i> Permissions</a></li>
+      <li><a href="#logs" onclick="loadPage('logs')"><i class="fas fa-database"></i> Logs</a></li>
       <li><a href="#about" onclick="loadPage('about')"><i class="fas fa-info-circle"></i> À propos</a></li>
       <li><a href="#contact" onclick="loadPage('contact')"><i class="fas fa-envelope"></i> Contact</a></li>
     </ul>
   </nav>
 
-  <!-- Zone de contenu dynamique -->
   <div id="content" class="content">
-    <!-- Contenu dynamique de la page d'accueil -->
     <section class="home">
       <div class="container">
         <h2>Bienvenue sur le Dashboard de votre Bot Discord !</h2>
         <div class="home-info">
-          <!-- Image du Bot -->
           <img src="https://minecraft.wiki/images/Diamond_Pickaxe_JE3_BE3.png?7409d" alt="Image du Bot" class="bot-image">
           <div class="home-text">
             <h3>Gérez votre Bot en un Clic</h3>
-            <p>Utilisez ce dashboard pour configurer, personnaliser et gérer votre bot Discord facilement. Ajoutez-le à vos serveurs et profitez de toutes les fonctionnalités avancées.</p>
+            <p>Utilisez ce dashboard pour configurer, personnaliser et gérer votre bot Discord facilement.</p>
             <a href="https://discord.com/oauth2/authorize?client_id=1361826455406772408&permissions=8&integration_type=0&scope=bot" class="btn-primary">Ajouter le bot à votre serveur</a>
           </div>
         </div>
+      </div>
 
-        <!-- Fonctionnalités du Bot -->
-        <div class="home-features">
-          <h3>Fonctionnalités</h3>
-          <div class="features-grid">
-            <div class="feature">
-              <i class="fas fa-sliders-h"></i>
-              <h4>Configuration Facile</h4>
-              <p>Modifiez les paramètres de votre bot facilement et en temps réel.</p>
-              <button onclick="openConfigModal()">Configurer le Bot</button>
-            </div>
-            <div class="feature">
-              <i class="fas fa-users-cog"></i>
-              <h4>Permissions</h4>
-              <p>Définissez qui peut faire quoi sur vos serveurs.</p>
-              <button onclick="openPermissionsModal()">Gérer les Permissions</button>
-            </div>
-            <div class="feature">
-              <i class="fas fa-database"></i>
-              <h4>Logs & Historique</h4>
-              <p>Suivez toutes les actions du bot sur vos serveurs en temps réel.</p>
-              <button onclick="openLogs()">Voir les Logs</button>
-            </div>
+      <div class="home-features">
+        <div class="features-grid">
+          <div class="feature">
+            <i class="fas fa-sliders-h"></i>
+            <h4>Configuration</h4>
+            <p>Modifiez les paramètres de votre bot facilement.</p>
+            <button onclick="openConfigModal()">Configurer le Bot</button>
+          </div>
+          <div class="feature">
+            <i class="fas fa-users-cog"></i>
+            <h4>Permissions</h4>
+            <p>Définissez les rôles et accès de votre serveur.</p>
+            <button onclick="openPermissionsModal()">Gérer les Permissions</button>
+          </div>
+          <div class="feature">
+            <i class="fas fa-database"></i>
+            <h4>Logs</h4>
+            <p>Consultez les activités de votre bot.</p>
+            <button onclick="openLogs()">Voir les Logs</button>
           </div>
         </div>
       </div>
     </section>
-
-    <!-- Modals interactifs -->
-    <div id="configModal" class="modal">
-      <div class="modal-content">
-        <span class="close" onclick="closeModal('configModal')">&times;</span>
-        <h2>Configurer le Bot</h2>
-        <form>
-          <label for="prefix">Préfixe du Bot:</label>
-          <input type="text" id="prefix" name="prefix" placeholder="Entrez un préfixe...">
-          <label for="status">Statut du Bot:</label>
-          <select id="status" name="status">
-            <option value="online">En ligne</option>
-            <option value="dnd">Ne pas déranger</option>
-            <option value="idle">Inactif</option>
-          </select>
-          <button type="submit">Sauvegarder</button>
-        </form>
-      </div>
-    </div>
-
-    <div id="permissionsModal" class="modal">
-      <div class="modal-content">
-        <span class="close" onclick="closeModal('permissionsModal')">&times;</span>
-        <h2>Gérer les Permissions</h2>
-        <form>
-          <label for="role">Rôle:</label>
-          <select id="role" name="role">
-            <option value="admin">Administrateur</option>
-            <option value="moderator">Modérateur</option>
-            <option value="member">Membre</option>
-          </select>
-          <label for="permissions">Permissions:</label>
-          <div>
-            <label><input type="checkbox" id="manageMessages"> Gérer les messages</label>
-            <label><input type="checkbox" id="kickMembers"> Expulser les membres</label>
-          </div>
-          <button type="submit">Appliquer les Permissions</button>
-        </form>
-      </div>
-    </div>
-
-    <div id="logsModal" class="modal">
-      <div class="modal-content">
-        <span class="close" onclick="closeModal('logsModal')">&times;</span>
-        <h2>Logs du Bot</h2>
-        <div class="log-list">
-          <div class="log-item">
-            <p><strong>Message:</strong> Le bot a rejoint le serveur.</p>
-            <p><strong>Date:</strong> 2025-04-19 10:00:00</p>
-          </div>
-          <div class="log-item">
-            <p><strong>Message:</strong> Le bot a envoyé un message.</p>
-            <p><strong>Date:</strong> 2025-04-19 10:05:00</p>
-          </div>
-        </div>
-      </div>
-    </div>
-
   </div>
 
   <script>
-    // Fonction de changement de thème (clair/sombre)
     function toggleTheme() {
       document.body.classList.toggle('dark-theme');
       document.body.classList.toggle('light-theme');
     }
 
-    // Fonction d'affichage/masquage du menu
     function toggleMenu() {
-      const menu = document.getElementById('menu');
-      menu.classList.toggle('active');
+      document.getElementById('menu').classList.toggle('active');
     }
 
-    // Modals interactifs
     function openConfigModal() {
       document.getElementById('configModal').style.display = 'block';
     }
@@ -163,46 +304,14 @@
       document.getElementById('logsModal').style.display = 'block';
     }
 
-    function closeModal(modalId) {
-      document.getElementById(modalId).style.display = 'none';
+    function closeModal(id) {
+      document.getElementById(id).style.display = 'none';
     }
 
-    // Chargement dynamique des pages
     function loadPage(page) {
       const content = document.getElementById('content');
-      const pages = {
-        home: `
-          <section class="home">
-            <div class="container">
-              <h2>Bienvenue sur le Dashboard de votre Bot Discord !</h2>
-              <div class="home-info">
-                <img src="https://minecraft.wiki/images/Diamond_Pickaxe_JE3_BE3.png?7409d" alt="Image du Bot" class="bot-image">
-                <div class="home-text">
-                  <h3>Gérez votre Bot en un Clic</h3>
-                  <p>Utilisez ce dashboard pour configurer, personnaliser et gérer votre bot Discord facilement. Ajoutez-le à vos serveurs et profitez de toutes les fonctionnalités avancées.</p>
-                  <a href="https://discord.com/oauth2/authorize?client_id=1361826455406772408&permissions=8&integration_type=0&scope=bot" class="btn-primary">Ajouter le bot à votre serveur</a>
-                </div>
-              </div>
-              <div class="home-features">
-                <h3>Fonctionnalités</h3>
-                <div class="features-grid">
-                  <div class="feature">
-                    <i class="fas fa-sliders-h"></i>
-                    <h4>Configuration Facile</h4>
-                    <p>Modifiez les paramètres de votre bot facilement et en temps réel.</p>
-                    <button onclick="openConfigModal()">Configurer le Bot</button>
-                  </div>
-                  <div class="feature">
-                    <i class="fas fa-users-cog"></i>
-                    <h4>Permissions</h4>
-                    <p>Définissez qui peut faire quoi sur vos serveurs.</p>
-                    <button onclick="openPermissionsModal()">Gérer les Permissions</button>
-                  </div>
-                  <div class="feature">
-                    <i class="fas fa-database"></i>
-                    <h4>Logs & Historique</h4>
-                    <p>Suivez toutes les actions du bot sur vos serveurs en temps réel.</p>
-                    <button onclick="openLogs()">Voir les Logs</button>
-                  </div>
-                </div>
-              </div
+      content.innerHTML = `<section><h2>Chargement de la page : ${page}</h2><p>Contenu en construction...</p></section>`;
+    }
+  </script>
+</body>
+</html>
