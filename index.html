@@ -6,86 +6,78 @@
   <title>Dashboard Bot Discord</title>
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
 </head>
 <body class="light-theme">
-  <!-- Boutons fixes en haut -->
+  <!-- Header avec boutons fixes -->
   <header class="fixed-header">
     <button class="menu-toggle" onclick="toggleMenu()">☰ Menu</button>
     <button class="theme-toggle" onclick="toggleTheme()">Changer de thème</button>
   </header>
 
-  <!-- Menu interactif -->
-  <nav>
+  <!-- Menu latéral interactif -->
+  <nav id="navMenu">
     <a href="#home" onclick="loadPage('home')"><i class="fas fa-home"></i> Accueil</a>
     <a href="#features" onclick="loadPage('features')"><i class="fas fa-cogs"></i> Fonctionnalités</a>
     <a href="#commands" onclick="loadPage('commands')"><i class="fas fa-terminal"></i> Commandes</a>
     <a href="#servers" onclick="loadPage('servers')"><i class="fas fa-server"></i> Serveurs</a>
     <a href="#about" onclick="loadPage('about')"><i class="fas fa-info-circle"></i> À propos</a>
     <a href="#contact" onclick="loadPage('contact')"><i class="fas fa-envelope"></i> Contact</a>
+    <a href="#login" onclick="loadPage('login')"><i class="fas fa-sign-in-alt"></i> Se connecter</a>
   </nav>
 
   <!-- Zone de contenu dynamique -->
   <div id="content">
-    <section>
-      <h2>Ajouter le bot</h2>
-      <div style="text-align: center;">
-        <img src="https://via.placeholder.com/150" alt="Image du Bot" style="border-radius: 50%; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
-        <h3>Ton Bot Discord</h3>
-        <p>Gérez facilement votre bot Discord à partir de cette interface moderne.</p>
-        <a href="https://discord.com/oauth2/authorize?client_id=1361826455406772408&permissions=8&integration_type=0&scope=bot" 
-           style="background: var(--primary-color); color: white; padding: 10px 20px; border-radius: 5px; text-decoration: none;">Ajouter le bot</a>
-      </div>
-    </section>
+    <!-- Contenu dynamique sera injecté ici -->
   </div>
 
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2025 Dashboard Bot Discord. Tous droits réservés.</p>
+  </footer>
+
   <script>
-    /* Gestion des thèmes */
+    // Toggle entre les thèmes clair/sombre
     function toggleTheme() {
       document.body.classList.toggle('dark-theme');
       document.body.classList.toggle('light-theme');
     }
 
-    /* Affichage du menu */
+    // Toggle du menu latéral
     function toggleMenu() {
-      const menu = document.querySelector('nav');
-      menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
+      const menu = document.getElementById('navMenu');
+      menu.classList.toggle('open');
     }
 
-    /* Chargement des pages dynamiques */
+    // Chargement du contenu dynamique pour chaque page
     function loadPage(page) {
       const content = document.getElementById('content');
       const pages = {
         home: `
           <section>
-            <h2>Ajouter le bot</h2>
-            <div style="text-align: center;">
-              <img src="https://via.placeholder.com/150" alt="Image du Bot" style="border-radius: 50%; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
-              <h3>Ton Bot Discord</h3>
-              <p>Gérez facilement votre bot Discord à partir de cette interface moderne.</p>
-              <a href="https://discord.com/oauth2/authorize?client_id=1361826455406772408&permissions=8&integration_type=0&scope=bot"
-                style="background: var(--primary-color); color: white; padding: 10px 20px; border-radius: 5px; text-decoration: none;">Ajouter le bot</a>
-            </div>
+            <h2>Bienvenue sur votre Dashboard Bot Discord</h2>
+            <p>Gérez votre bot Discord facilement avec des outils puissants et une interface moderne.</p>
+            <button onclick="window.location.href='https://discord.com/oauth2/authorize?client_id=1361826455406772408&permissions=8&scope=bot'" class="btn-primary">Ajouter le bot</button>
           </section>
         `,
         features: `
           <section>
             <h2>Fonctionnalités</h2>
-            <p>Explorez les outils avancés :</p>
             <div class="grid">
               <div class="card">
                 <i class="fas fa-sliders-h"></i>
                 <h3>Configuration</h3>
-                <p>Modifiez les paramètres du bot à tout moment.</p>
+                <p>Modifiez les paramètres de votre bot en temps réel.</p>
               </div>
               <div class="card">
                 <i class="fas fa-user-shield"></i>
                 <h3>Permissions</h3>
-                <p>Définissez qui a accès à quoi sur vos serveurs.</p>
+                <p>Définissez qui peut faire quoi sur vos serveurs.</p>
               </div>
               <div class="card">
                 <i class="fas fa-database"></i>
                 <h3>Logs & Historique</h3>
-                <p>Consultez les actions effectuées sur vos serveurs.</p>
+                <p>Consultez les actions effectuées sur vos serveurs et bots.</p>
               </div>
             </div>
           </section>
@@ -93,41 +85,48 @@
         commands: `
           <section>
             <h2>Commandes</h2>
-            <p>Utilisez ces commandes avec votre bot :</p>
+            <p>Voici les commandes disponibles pour interagir avec votre bot :</p>
             <ul>
-              <li><i class="fas fa-user-times"></i> <code>/ban</code> - Bannir un membre</li>
-              <li><i class="fas fa-ban"></i> <code>/kick</code> - Expulser un membre</li>
-              <li><i class="fas fa-bell"></i> <code>/warn</code> - Avertir un membre</li>
-              <li><i class="fas fa-terminal"></i> <code>/userinfo</code> - Informations sur un membre</li>
+              <li><i class="fas fa-user-times"></i> <code>/ban</code> - Bannir un utilisateur</li>
+              <li><i class="fas fa-ban"></i> <code>/kick</code> - Expulser un utilisateur</li>
+              <li><i class="fas fa-bell"></i> <code>/warn</code> - Avertir un utilisateur</li>
+              <li><i class="fas fa-terminal"></i> <code>/userinfo</code> - Afficher les informations d'un utilisateur</li>
             </ul>
           </section>
         `,
         servers: `
           <section>
             <h2>Serveurs</h2>
-            <p>Surveillez l'activité des serveurs :</p>
+            <p>Gestion des serveurs où votre bot est installé :</p>
             <ul>
-              <li><i class="fas fa-server"></i> Serveur Principal</li>
-              <li><i class="fas fa-users"></i> Communauté Discord</li>
+              <li><i class="fas fa-server"></i> Serveur 1</li>
+              <li><i class="fas fa-users"></i> Serveur 2</li>
             </ul>
           </section>
         `,
         about: `
           <section>
             <h2>À propos</h2>
-            <p>Ce dashboard est conçu pour fournir une interface simple, moderne et complète.</p>
+            <p>Ce dashboard vous permet de gérer et personnaliser facilement votre bot Discord.</p>
           </section>
         `,
         contact: `
           <section>
             <h2>Contact</h2>
-            <p>Pour toute assistance ou question :</p>
-            <p><a href="mailto:nabox3624@gmail.com"><i class="fas fa-envelope"></i> nabox3624@gmail.com</a></p>
+            <p>Pour toute question ou assistance, contactez-nous par email :</p>
+            <p><a href="mailto:support@example.com"><i class="fas fa-envelope"></i> support@example.com</a></p>
+          </section>
+        `,
+        login: `
+          <section>
+            <h2>Connexion via Discord</h2>
+            <p>Connectez-vous à votre compte Discord pour accéder aux fonctionnalités avancées de votre bot.</p>
+            <button onclick="window.location.href='https://discord.com/oauth2/authorize?client_id=YOUR_CLIENT_ID&permissions=8&scope=bot+identify'" class="btn-primary">Se connecter avec Discord</button>
           </section>
         `
       };
       content.innerHTML = pages[page] || '<p>Page introuvable.</p>';
-      toggleMenu();
+      toggleMenu();  // Fermer le menu après avoir changé de page
     }
   </script>
 </body>
