@@ -3,10 +3,24 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dashboard Bot Discord - Futuriste Japonais</title>
-  <!-- Google Fonts pour un style futuriste et japonais -->
+  <title>Dashboard Bot Discord - Modern Futuriste Japonais</title>
+  <!-- Google Fonts Modern & Futuristes -->
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
   <style>
+    /* ----------------------------------------------------- */
+    /* Variables pour le Théming */
+    /* ----------------------------------------------------- */
+    :root {
+      --primary-color: #00d4ff;
+      --secondary-color: #aa00ff;
+      --accent-color: #ff0077;
+      --highlight-color: #ffde00;
+      --background-dark: #1a1a1a;
+      --text-color: #e0e0e0;
+      --nav-bg: rgba(0, 0, 0, 0.85);
+      --section-bg: rgba(0, 0, 0, 0.75);
+    }
+
     /* ----------------------------------------------------- */
     /* Global Reset & Styles de Base */
     /* ----------------------------------------------------- */
@@ -17,8 +31,8 @@
     }
     body {
       font-family: 'Noto Sans JP', sans-serif;
-      background: #1a1a1a;
-      color: #e0e0e0;
+      background: var(--background-dark);
+      color: var(--text-color);
       line-height: 1.6;
       overflow-x: hidden;
       transition: background 0.5s, color 0.5s;
@@ -26,189 +40,223 @@
     h1, h2, h3 {
       font-family: 'Orbitron', sans-serif;
     }
-    
+
     /* ----------------------------------------------------- */
-    /* Animation de Dégradé pour le Header (futuriste) */
-    /* ----------------------------------------------------- */
-    @keyframes gradient {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
-    }
-    header {
-      background: linear-gradient(45deg, #00d4ff, #aa00ff, #ff0077, #ffde00);
-      background-size: 400% 400%;
-      animation: gradient 10s ease infinite;
-      text-align: center;
-      padding: 20px;
-      border-bottom: 2px solid #ffde00;
-      position: relative;
-    }
-    header h1 {
-      font-size: 2rem;
-      /* Inclusion de petits emojis japonais pour le style */
-    }
-    
-    /* ----------------------------------------------------- */
-    /* Loader (affiché au démarrage) */
+    /* Loader Animation */
     /* ----------------------------------------------------- */
     #loader {
       position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
+      top: 0; left: 0; right: 0; bottom: 0;
       background: #000;
       display: flex;
       justify-content: center;
       align-items: center;
-      z-index: 9999;
+      z-index: 10000;
     }
     .spinner {
       width: 50px;
       height: 50px;
       border: 5px solid transparent;
-      border-top: 5px solid #ffde00;
+      border-top: 5px solid var(--highlight-color);
       border-radius: 50%;
       animation: spin 1s linear infinite;
     }
     @keyframes spin {
-      from { transform: rotate(0deg); }
       to { transform: rotate(360deg); }
     }
-    
+
     /* ----------------------------------------------------- */
-    /* Navigation - Style Futuriste & Minimaliste */
+    /* Header avec Animation de Dégradé Futuriste */
+    /* ----------------------------------------------------- */
+    @keyframes gradientAnimation {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    header {
+      background: linear-gradient(45deg, var(--primary-color), var(--secondary-color), var(--accent-color), var(--highlight-color));
+      background-size: 400% 400%;
+      animation: gradientAnimation 10s ease infinite;
+      text-align: center;
+      padding: 20px;
+      border-bottom: 2px solid var(--highlight-color);
+      position: relative;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+    }
+    header h1 {
+      font-size: 2.2rem;
+      letter-spacing: 2px;
+    }
+
+    /* ----------------------------------------------------- */
+    /* Navigation : UI Moderne avec Transitions */
     /* ----------------------------------------------------- */
     nav {
-      background: rgba(0, 0, 0, 0.8);
+      background: var(--nav-bg);
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-      border-bottom: 1px solid #ffde00;
+      border-bottom: 1px solid var(--highlight-color);
     }
     nav ul {
-      list-style: none;
       display: flex;
       justify-content: center;
-      padding: 10px 0;
+      list-style: none;
+      padding: 12px 0;
     }
     nav li {
-      margin: 0 15px;
-    }
-    nav a {
-      color: #e0e0e0;
-      text-decoration: none;
-      font-size: 1rem;
-      transition: color 0.3s, transform 0.2s;
+      margin: 0 20px;
       position: relative;
     }
+    nav a {
+      color: var(--text-color);
+      text-decoration: none;
+      font-size: 1.1rem;
+      padding: 8px;
+      transition: transform 0.3s ease, color 0.3s ease;
+    }
     nav a:hover {
-      color: #ffde00;
+      color: var(--highlight-color);
       transform: translateY(-3px);
     }
-    
+    nav a::after {
+      content: "";
+      position: absolute;
+      width: 0;
+      height: 3px;
+      background: var(--highlight-color);
+      left: 0;
+      bottom: -5px;
+      transition: width 0.3s;
+    }
+    nav a:hover::after {
+      width: 100%;
+    }
+
     /* ----------------------------------------------------- */
-    /* Conteneur Principal et Pages (simulant des écrans) */
+    /* Main & Pages avec Transitions Fluides */
     /* ----------------------------------------------------- */
     main {
       padding: 20px;
       min-height: 70vh;
-      background: rgba(255, 255, 255, 0.05);
+      background: rgba(255,255,255,0.05);
       border-top: 1px solid #333;
     }
-    
-    /* Chaque "page" est une div qui occupe la totalité du main */
     .page {
       display: none;
       opacity: 0;
-      transition: opacity 0.5s ease;
+      transform: scale(0.98);
+      transition: opacity 0.5s ease, transform 0.5s ease;
     }
     .page.active {
       display: block;
       opacity: 1;
+      transform: scale(1);
     }
-    
+
     /* ----------------------------------------------------- */
-    /* Styles des Sections Internes des Pages */
+    /* Sections Modernes avec Effets Subtils */
     /* ----------------------------------------------------- */
     .page section {
-      background: rgba(0, 0, 0, 0.7);
-      padding: 20px;
-      border: 1px solid #ffde00;
+      background: var(--section-bg);
+      padding: 25px;
+      margin-bottom: 25px;
+      border: 1px solid var(--highlight-color);
       border-radius: 8px;
-      box-shadow: 0 0 10px rgba(255, 222, 0, 0.5);
-      margin-bottom: 20px;
+      box-shadow: 0 0 15px rgba(255, 222, 0, 0.5);
+      transform: translateY(20px);
+      opacity: 0;
+      animation: slideUp 0.6s forwards;
+    }
+    .page.active section {
+      animation-delay: 0.3s;
+    }
+    @keyframes slideUp {
+      to { transform: translateY(0); opacity: 1; }
     }
     .page h2 {
-      margin-bottom: 10px;
+      margin-bottom: 15px;
     }
-    
+
     /* ----------------------------------------------------- */
-    /* Formulaire de Contact */
+    /* Formulaire de Contact Modernisé */
     /* ----------------------------------------------------- */
     form {
       display: flex;
       flex-direction: column;
-      gap: 10px;
+      gap: 15px;
     }
     form input,
     form textarea {
-      padding: 10px;
-      border: 1px solid #555;
-      border-radius: 4px;
-      background: #222;
-      color: #e0e0e0;
-    }
-    form button {
-      padding: 10px;
+      padding: 12px;
       border: none;
       border-radius: 4px;
-      background: #aa00ff;
+      background: #222;
+      color: var(--text-color);
+      font-size: 1rem;
+      transition: background 0.3s ease;
+    }
+    form input:focus,
+    form textarea:focus {
+      background: #333;
+      outline: none;
+    }
+    form button {
+      padding: 12px;
+      border: none;
+      border-radius: 4px;
+      background: var(--secondary-color);
       color: #fff;
+      font-size: 1.1rem;
       cursor: pointer;
-      transition: background 0.3s;
+      transition: background 0.3s ease, transform 0.2s ease;
     }
     form button:hover {
-      background: #ff0077;
+      background: var(--accent-color);
+      transform: scale(1.05);
     }
 
     /* ----------------------------------------------------- */
     /* Footer */
     /* ----------------------------------------------------- */
     footer {
-      background: rgba(0, 0, 0, 0.8);
+      background: var(--nav-bg);
       text-align: center;
       padding: 15px;
-      border-top: 1px solid #ffde00;
+      border-top: 1px solid var(--highlight-color);
+      box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.5);
     }
-    
+
     /* ----------------------------------------------------- */
     /* Responsive Design */
     /* ----------------------------------------------------- */
     @media (max-width: 768px) {
       nav ul {
         flex-direction: column;
+        align-items: center;
       }
       nav li {
         margin: 10px 0;
       }
+      header h1 {
+        font-size: 1.8rem;
+      }
     }
-    
+
     /* ----------------------------------------------------- */
-    /* Particules Néon Animées (pour un effet futuriste japonais) */
+    /* Particules Néon Animées pour l’Effet Futuriste */
     /* ----------------------------------------------------- */
     .particle {
       position: absolute;
-      width: 5px;
-      height: 5px;
-      background: #ff0077;
+      width: 6px;
+      height: 6px;
+      background: var(--highlight-color);
       border-radius: 50%;
-      opacity: 0.7;
-      animation: float 5s infinite;
+      opacity: 0.8;
+      animation: floatParticle 4s infinite;
     }
-    @keyframes float {
-      0% { transform: translateY(0); opacity: 0.7; }
-      50% { transform: translateY(-20px); opacity: 1; }
-      100% { transform: translateY(0); opacity: 0.7; }
+    @keyframes floatParticle {
+      0% { transform: translateY(0) translateX(0) scale(1); opacity: 0.8; }
+      50% { transform: translateY(-20px) translateX(10px) scale(1.2); opacity: 1; }
+      100% { transform: translateY(0) translateX(0) scale(1); opacity: 0.8; }
     }
   </style>
 </head>
@@ -217,23 +265,22 @@
   <div id="loader">
     <div class="spinner"></div>
   </div>
-  
-  <!-- Particules d'effet -->
+
+  <!-- Génération de Particules -->
   <script>
-    // Génération de particules pour un effet d'ambiance futuriste
-    for (let i = 0; i < 20; i++) {
+    for (let i = 0; i < 30; i++) {
       let particle = document.createElement('div');
       particle.className = 'particle';
       particle.style.top = Math.random() * 100 + '%';
       particle.style.left = Math.random() * 100 + '%';
-      particle.style.animationDuration = (3 + Math.random() * 4) + 's';
+      particle.style.animationDuration = (3 + Math.random() * 3) + 's';
       document.body.appendChild(particle);
     }
   </script>
   
   <!-- Header -->
   <header>
-    <h1>未来のダッシュボード Dashboard</h1>
+    <h1>未来のモダンダッシュボード</h1>
   </header>
   
   <!-- Navigation -->
@@ -252,7 +299,7 @@
     <div id="home" class="page active">
       <section>
         <h2>Accueil</h2>
-        <p>Bienvenue sur votre dashboard futuriste japonais animé. Naviguez dans les différentes sections pour contrôler votre bot Discord.</p>
+        <p>Bienvenue sur votre dashboard futuriste japonais animé. Explorez les différentes sections pour gérer votre bot Discord avec style et modernité.</p>
       </section>
     </div>
     
@@ -260,8 +307,8 @@
     <div id="stats" class="page">
       <section>
         <h2>Statistiques</h2>
-        <p>Ici, des graphiques et des données en temps réel s'affichent pour suivre les performances de votre bot.</p>
-        <div style="text-align: center; font-size: 2rem; color: #ffde00;">📊</div>
+        <p>Visualisez des graphiques et des données en temps réel pour monitorer votre bot.</p>
+        <div style="text-align: center; font-size: 2.5rem; color: var(--highlight-color);">📊</div>
       </section>
     </div>
     
@@ -269,11 +316,11 @@
     <div id="settings" class="page">
       <section>
         <h2>Paramètres</h2>
-        <p>Configurez et ajustez les options de votre bot pour une performance optimale. Chaque réglage s'intègre de façon transparente.</p>
+        <p>Configurez les options de votre bot pour une performance optimale avec une interface futuriste et intuitive.</p>
         <ul>
-          <li>Réglage 1 futuriste</li>
-          <li>Réglage 2 animé</li>
-          <li>Réglage 3 japonais</li>
+          <li>Réglage Alpha</li>
+          <li>Réglage Beta</li>
+          <li>Réglage Gamma</li>
         </ul>
       </section>
     </div>
@@ -282,7 +329,7 @@
     <div id="contact" class="page">
       <section>
         <h2>Contact</h2>
-        <p>Envoyez-nous vos retours ou questions via le formulaire ci-dessous :</p>
+        <p>Envoyez-nous vos retours ou questions via le formulaire ci-dessous.</p>
         <form id="contactForm" action="mailto:adresse@example.com" method="post" enctype="text/plain">
           <label for="name">Nom :</label>
           <input type="text" id="name" name="name" placeholder="Votre nom" required>
@@ -301,14 +348,14 @@
     <p>&copy; 2025 Dashboard Bot Discord. Tous droits réservés.</p>
   </footer>
   
-  <!-- JavaScript pour le loader et la navigation interne -->
+  <!-- JS pour Loader et Navigation Interne -->
   <script>
-    // Cache l'écran de chargement une fois la page entièrement chargée
+    // Cache le loader une fois la page chargée
     window.addEventListener('load', function() {
       document.getElementById('loader').style.display = 'none';
     });
     
-    // Fonction de gestion des pages : affiche la page demandée et masque les autres
+    // Fonction pour afficher la page ciblée et masquer les autres pages
     function showPage(pageId) {
       const pages = document.querySelectorAll('.page');
       pages.forEach(page => {
@@ -320,17 +367,17 @@
       });
     }
     
-    // Gestion du clic sur les liens du menu
+    // Gestion des clics sur la navigation
     document.querySelectorAll('nav a').forEach(link => {
       link.addEventListener('click', function(e) {
         e.preventDefault();
         const targetPage = this.getAttribute('data-page');
         showPage(targetPage);
-        window.location.hash = targetPage; // Met à jour l'URL (facultatif)
+        window.location.hash = targetPage;
       });
     });
     
-    // Au chargement, si un hash est présent dans l'URL, affiche la page concernée
+    // Si un hash est présent dans l'URL, affiche la page correspondante
     window.addEventListener('DOMContentLoaded', function() {
       const hash = window.location.hash.substring(1);
       if(hash) {
