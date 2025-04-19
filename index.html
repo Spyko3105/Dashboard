@@ -3,13 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dashboard Bot Discord - Minecraft & Japan Theme</title>
-  <!-- Polices personnalisées pour le style Minecraft et Japon -->
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Noto+Sans+JP:wght@400;700&display=swap">
+  <title>Dashboard Bot Discord - Futuriste Japonais</title>
+  <!-- Google Fonts pour un style futuriste et japonais -->
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
   <style>
-    /* ---------------------------------------------
-       Global Reset & Base Styles
-    --------------------------------------------- */
+    /* ----------------------------------------------------- */
+    /* Global Reset & Styles de Base */
+    /* ----------------------------------------------------- */
     * {
       margin: 0;
       padding: 0;
@@ -17,352 +17,326 @@
     }
     body {
       font-family: 'Noto Sans JP', sans-serif;
+      background: #1a1a1a;
+      color: #e0e0e0;
       line-height: 1.6;
-      background-color: #ded7c9;
-      /* Fond inspiré de Minecraft avec une grille subtile */
-      background-image: 
-        linear-gradient(45deg, rgba(255,255,255,0.05) 25%, transparent 25%, transparent 50%, rgba(255,255,255,0.05) 50%, rgba(255,255,255,0.05) 75%, transparent 75%, transparent),
-        linear-gradient(45deg, rgba(255,255,255,0.05) 25%, transparent 25%, transparent 50%, rgba(255,255,255,0.05) 50%, rgba(255,255,255,0.05) 75%, transparent 75%, transparent);
-      background-size: 40px 40px;
-      background-position: 0 0, 20px 20px;
-      color: #333;
-      transition: background 0.3s, color 0.3s;
       overflow-x: hidden;
+      transition: background 0.5s, color 0.5s;
     }
-    h1, h2, h3, h4, h5, h6 {
-      font-family: 'Press Start 2P', cursive;
+    h1, h2, h3 {
+      font-family: 'Orbitron', sans-serif;
     }
-
-    /* ---------------------------------------------
-       Loader Animation (affiché au lancement)
-    --------------------------------------------- */
+    
+    /* ----------------------------------------------------- */
+    /* Animation de Dégradé pour le Header (futuriste) */
+    /* ----------------------------------------------------- */
+    @keyframes gradient {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    header {
+      background: linear-gradient(45deg, #00d4ff, #aa00ff, #ff0077, #ffde00);
+      background-size: 400% 400%;
+      animation: gradient 10s ease infinite;
+      text-align: center;
+      padding: 20px;
+      border-bottom: 2px solid #ffde00;
+      position: relative;
+    }
+    header h1 {
+      font-size: 2rem;
+      /* Inclusion de petits emojis japonais pour le style */
+    }
+    
+    /* ----------------------------------------------------- */
+    /* Loader (affiché au démarrage) */
+    /* ----------------------------------------------------- */
     #loader {
       position: fixed;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background: #fff;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: #000;
       display: flex;
       justify-content: center;
       align-items: center;
       z-index: 9999;
     }
     .spinner {
-      width: 60px;
-      height: 60px;
-      border: 6px solid #ccc;
-      border-top: 6px solid #1d72b8;
+      width: 50px;
+      height: 50px;
+      border: 5px solid transparent;
+      border-top: 5px solid #ffde00;
       border-radius: 50%;
       animation: spin 1s linear infinite;
     }
     @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
     }
-
-    /* ---------------------------------------------
-       Header avec thème Minecraft & Japon
-    --------------------------------------------- */
-    header {
-      background: linear-gradient(135deg, #1d72b8, #ffccd5);
-      color: #fff;
-      padding: 1rem;
-      text-align: center;
-      border-bottom: 4px solid #333;
-      position: relative;
-    }
-    header h1::before {
-      content: "⛏ ";
-      font-size: 1.2em;
-      vertical-align: middle;
-    }
-    header h1::after {
-      content: " 🎎";
-      font-size: 1.2em;
-      vertical-align: middle;
-    }
-
-    /* ---------------------------------------------
-       Navigation Menu - Style Pixel Art
-    --------------------------------------------- */
+    
+    /* ----------------------------------------------------- */
+    /* Navigation - Style Futuriste & Minimaliste */
+    /* ----------------------------------------------------- */
     nav {
-      background: #333;
+      background: rgba(0, 0, 0, 0.8);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+      border-bottom: 1px solid #ffde00;
     }
     nav ul {
       list-style: none;
       display: flex;
-      flex-wrap: wrap;
       justify-content: center;
+      padding: 10px 0;
     }
     nav li {
-      margin: 0;
+      margin: 0 15px;
     }
     nav a {
-      display: block;
-      color: #fff;
-      padding: 1rem;
+      color: #e0e0e0;
       text-decoration: none;
-      transition: background 0.3s, transform 0.1s;
-      border-right: 2px solid #575757;
-    }
-    nav li:last-child a {
-      border-right: none;
+      font-size: 1rem;
+      transition: color 0.3s, transform 0.2s;
+      position: relative;
     }
     nav a:hover {
-      background: #575757;
-      transform: scale(1.1);
+      color: #ffde00;
+      transform: translateY(-3px);
     }
-
-    /* ---------------------------------------------
-       Main Content & Sections - UI Blocky
-    --------------------------------------------- */
+    
+    /* ----------------------------------------------------- */
+    /* Conteneur Principal et Pages (simulant des écrans) */
+    /* ----------------------------------------------------- */
     main {
-      padding: 1rem;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 1rem;
+      padding: 20px;
+      min-height: 70vh;
+      background: rgba(255, 255, 255, 0.05);
+      border-top: 1px solid #333;
     }
-    section {
-      background: #fff;
-      flex: 1 1 300px;
-      padding: 1rem;
-      border: 2px solid #333;
-      box-shadow: 4px 4px 0 #333;
+    
+    /* Chaque "page" est une div qui occupe la totalité du main */
+    .page {
+      display: none;
+      opacity: 0;
+      transition: opacity 0.5s ease;
+    }
+    .page.active {
+      display: block;
+      opacity: 1;
+    }
+    
+    /* ----------------------------------------------------- */
+    /* Styles des Sections Internes des Pages */
+    /* ----------------------------------------------------- */
+    .page section {
+      background: rgba(0, 0, 0, 0.7);
+      padding: 20px;
+      border: 1px solid #ffde00;
       border-radius: 8px;
-      position: relative;
-      overflow: hidden;
+      box-shadow: 0 0 10px rgba(255, 222, 0, 0.5);
+      margin-bottom: 20px;
     }
-    section h2 {
-      margin-bottom: 0.5rem;
+    .page h2 {
+      margin-bottom: 10px;
     }
-
-    /* ---------------------------------------------
-       Formulaire de Contact - Ambiance Minecraft
-    --------------------------------------------- */
+    
+    /* ----------------------------------------------------- */
+    /* Formulaire de Contact */
+    /* ----------------------------------------------------- */
     form {
       display: flex;
       flex-direction: column;
-      gap: 0.75rem;
-    }
-    form label {
-      font-weight: bold;
+      gap: 10px;
     }
     form input,
     form textarea {
-      padding: 0.5rem;
-      border: 2px solid #333;
+      padding: 10px;
+      border: 1px solid #555;
       border-radius: 4px;
-      font-size: 1rem;
-      background: #f9f9f9;
+      background: #222;
+      color: #e0e0e0;
     }
     form button {
-      padding: 0.75rem;
+      padding: 10px;
       border: none;
-      background: #1d72b8;
-      color: #fff;
       border-radius: 4px;
+      background: #aa00ff;
+      color: #fff;
       cursor: pointer;
-      transition: background 0.3s, transform 0.1s;
-      font-size: 1rem;
-      border: 2px solid #333;
+      transition: background 0.3s;
     }
     form button:hover {
-      background: #155a8a;
-      transform: scale(1.05);
+      background: #ff0077;
     }
 
-    /* ---------------------------------------------
-       Footer Style
-    --------------------------------------------- */
+    /* ----------------------------------------------------- */
+    /* Footer */
+    /* ----------------------------------------------------- */
     footer {
-      background: #333;
-      color: #fff;
+      background: rgba(0, 0, 0, 0.8);
       text-align: center;
-      padding: 1rem;
-      margin-top: 1rem;
-      border-top: 4px solid #1d72b8;
+      padding: 15px;
+      border-top: 1px solid #ffde00;
     }
-
-    /* ---------------------------------------------
-       Dark Mode Styles
-    --------------------------------------------- */
-    body.dark-mode {
-      background-color: #121212;
-      background-image: none;
-      color: #e0e0e0;
-    }
-    body.dark-mode header {
-      background: linear-gradient(135deg, #333, #555);
-      color: #fff;
-    }
-    body.dark-mode nav {
-      background: #222;
-    }
-    body.dark-mode nav a {
-      color: #ddd;
-    }
-    body.dark-mode section {
-      background: #1e1e1e;
-      border-color: #444;
-      box-shadow: 4px 4px 0 #111;
-    }
-    body.dark-mode form input,
-    body.dark-mode form textarea {
-      background: #2a2a2a;
-      color: #e0e0e0;
-      border-color: #444;
-    }
-    body.dark-mode form button {
-      background: #333;
-      border-color: #555;
-    }
-    body.dark-mode footer {
-      background: #222;
-    }
-
-    /* ---------------------------------------------
-       Responsive Design
-    --------------------------------------------- */
+    
+    /* ----------------------------------------------------- */
+    /* Responsive Design */
+    /* ----------------------------------------------------- */
     @media (max-width: 768px) {
       nav ul {
         flex-direction: column;
       }
-      main {
-        flex-direction: column;
-      }
-      section {
-        flex: 1 1 100%;
+      nav li {
+        margin: 10px 0;
       }
     }
-
-    /* ---------------------------------------------
-       Falling Cherry Blossoms Animation
-    --------------------------------------------- */
-    .petal {
-      position: fixed;
-      top: -50px;
-      font-size: 1.5rem;
-      z-index: 999;
-      pointer-events: none;
-      animation: fall linear infinite;
+    
+    /* ----------------------------------------------------- */
+    /* Particules Néon Animées (pour un effet futuriste japonais) */
+    /* ----------------------------------------------------- */
+    .particle {
+      position: absolute;
+      width: 5px;
+      height: 5px;
+      background: #ff0077;
+      border-radius: 50%;
+      opacity: 0.7;
+      animation: float 5s infinite;
     }
-    @keyframes fall {
-      0% {
-        transform: translateX(0) rotate(0deg);
-        opacity: 1;
-      }
-      100% {
-        transform: translateX(100px) translateY(110vh) rotate(360deg);
-        opacity: 0;
-      }
+    @keyframes float {
+      0% { transform: translateY(0); opacity: 0.7; }
+      50% { transform: translateY(-20px); opacity: 1; }
+      100% { transform: translateY(0); opacity: 0.7; }
     }
   </style>
 </head>
 <body>
-  <!-- Container pour les pétales de cerisiers tombants -->
-  <div id="petalContainer"></div>
-  
-  <!-- Loading Animation -->
+  <!-- Loader -->
   <div id="loader">
     <div class="spinner"></div>
   </div>
-
+  
+  <!-- Particules d'effet -->
+  <script>
+    // Génération de particules pour un effet d'ambiance futuriste
+    for (let i = 0; i < 20; i++) {
+      let particle = document.createElement('div');
+      particle.className = 'particle';
+      particle.style.top = Math.random() * 100 + '%';
+      particle.style.left = Math.random() * 100 + '%';
+      particle.style.animationDuration = (3 + Math.random() * 4) + 's';
+      document.body.appendChild(particle);
+    }
+  </script>
+  
   <!-- Header -->
   <header>
-    <h1>Dashboard Bot Discord</h1>
+    <h1>未来のダッシュボード Dashboard</h1>
   </header>
   
-  <!-- Navigation Menu -->
+  <!-- Navigation -->
   <nav>
     <ul>
-      <li><a href="#home">Accueil</a></li>
-      <li><a href="#stats">Statistiques</a></li>
-      <li><a href="#settings">Paramètres</a></li>
-      <li><a href="#contact">Contact</a></li>
-      <li><a href="#toggle-dark" id="darkModeToggle">Mode Sombre</a></li>
+      <li><a href="#home" data-page="home">Accueil</a></li>
+      <li><a href="#stats" data-page="stats">Statistiques</a></li>
+      <li><a href="#settings" data-page="settings">Paramètres</a></li>
+      <li><a href="#contact" data-page="contact">Contact</a></li>
     </ul>
   </nav>
   
-  <!-- Main Content -->
+  <!-- Contenu Principal -->
   <main>
-    <!-- Section Accueil -->
-    <section id="home">
-      <h2>Bienvenue</h2>
-      <p>Ceci est votre dashboard interactif avec un thème alliant l’univers pixelisé de Minecraft et l’élégance japonaise. Explorez des interfaces ultra stylées et profitez d’animations épiques !</p>
-    </section>
+    <!-- Page Accueil -->
+    <div id="home" class="page active">
+      <section>
+        <h2>Accueil</h2>
+        <p>Bienvenue sur votre dashboard futuriste japonais animé. Naviguez dans les différentes sections pour contrôler votre bot Discord.</p>
+      </section>
+    </div>
     
-    <!-- Section Statistiques -->
-    <section id="stats">
-      <h2>Statistiques</h2>
-      <p>Ici, vous pouvez visualiser des graphiques et des données en temps réel de votre bot. (Les graphiques interactifs pourront être ajoutés via des bibliothèques comme Chart.js.)</p>
-    </section>
+    <!-- Page Statistiques -->
+    <div id="stats" class="page">
+      <section>
+        <h2>Statistiques</h2>
+        <p>Ici, des graphiques et des données en temps réel s'affichent pour suivre les performances de votre bot.</p>
+        <div style="text-align: center; font-size: 2rem; color: #ffde00;">📊</div>
+      </section>
+    </div>
     
-    <!-- Section Paramètres -->
-    <section id="settings">
-      <h2>Paramètres</h2>
-      <p>Configurez les options de votre bot selon vos préférences. Des fonctionnalités supplémentaires pourront être ajoutées pour un contrôle complet.</p>
-    </section>
+    <!-- Page Paramètres -->
+    <div id="settings" class="page">
+      <section>
+        <h2>Paramètres</h2>
+        <p>Configurez et ajustez les options de votre bot pour une performance optimale. Chaque réglage s'intègre de façon transparente.</p>
+        <ul>
+          <li>Réglage 1 futuriste</li>
+          <li>Réglage 2 animé</li>
+          <li>Réglage 3 japonais</li>
+        </ul>
+      </section>
+    </div>
     
-    <!-- Section Contact -->
-    <section id="contact">
-      <h2>Contact</h2>
-      <p>Envoyez vos retours ou questions via le formulaire ci-dessous.</p>
-      <!-- Formulaire de contact utilisant mailto: (remplacez "adresse@example.com" par votre adresse mail réelle) -->
-      <form id="contactForm" action="mailto:adresse@example.com" method="post" enctype="text/plain">
-        <label for="name">Nom :</label>
-        <input type="text" id="name" name="name" placeholder="Votre nom" required>
-        
-        <label for="email">Email :</label>
-        <input type="email" id="email" name="email" placeholder="Votre email" required>
-        
-        <label for="message">Message :</label>
-        <textarea id="message" name="message" placeholder="Votre message" rows="4" required></textarea>
-        
-        <button type="submit">Envoyer</button>
-      </form>
-    </section>
+    <!-- Page Contact -->
+    <div id="contact" class="page">
+      <section>
+        <h2>Contact</h2>
+        <p>Envoyez-nous vos retours ou questions via le formulaire ci-dessous :</p>
+        <form id="contactForm" action="mailto:adresse@example.com" method="post" enctype="text/plain">
+          <label for="name">Nom :</label>
+          <input type="text" id="name" name="name" placeholder="Votre nom" required>
+          <label for="email">Email :</label>
+          <input type="email" id="email" name="email" placeholder="Votre email" required>
+          <label for="message">Message :</label>
+          <textarea id="message" name="message" placeholder="Votre message" rows="4" required></textarea>
+          <button type="submit">Envoyer</button>
+        </form>
+      </section>
+    </div>
   </main>
   
   <!-- Footer -->
   <footer>
     <p>&copy; 2025 Dashboard Bot Discord. Tous droits réservés.</p>
   </footer>
-
-  <!-- ---------------------------------------------
-       JavaScript: Gestion du Loader, Mode Sombre & Falling Blossoms
-  --------------------------------------------- -->
+  
+  <!-- JavaScript pour le loader et la navigation interne -->
   <script>
-    // Supprime l'écran de chargement lorsque la page est complètement chargée
+    // Cache l'écran de chargement une fois la page entièrement chargée
     window.addEventListener('load', function() {
-      var loader = document.getElementById('loader');
-      loader.style.display = 'none';
+      document.getElementById('loader').style.display = 'none';
     });
-
-    // Basculer le mode sombre lors du clic
-    var darkModeToggle = document.getElementById('darkModeToggle');
-    darkModeToggle.addEventListener('click', function(e) {
-      e.preventDefault();
-      document.body.classList.toggle('dark-mode');
-    });
-
-    // Générer des pétales de cerisiers tombants (Cherry Blossoms)
-    function createPetal() {
-      var petal = document.createElement('div');
-      petal.classList.add('petal');
-      petal.innerText = '🌸';
-      // Position et durée d’animation aléatoires
-      petal.style.left = Math.random() * window.innerWidth + 'px';
-      var duration = (Math.random() * 3) + 4; // durée entre 4 et 7 secondes
-      petal.style.animationDuration = duration + 's';
-      petal.style.fontSize = (Math.random() * 1.5 + 1) + 'rem';
-      document.body.appendChild(petal);
-      
-      // Supprimer le pétale à la fin de l'animation
-      setTimeout(function() {
-        petal.remove();
-      }, duration * 1000);
+    
+    // Fonction de gestion des pages : affiche la page demandée et masque les autres
+    function showPage(pageId) {
+      const pages = document.querySelectorAll('.page');
+      pages.forEach(page => {
+        if(page.id === pageId) {
+          page.classList.add('active');
+        } else {
+          page.classList.remove('active');
+        }
+      });
     }
     
-    // Créer un pétale toutes les 500 millisecondes
-    setInterval(createPetal, 500);
+    // Gestion du clic sur les liens du menu
+    document.querySelectorAll('nav a').forEach(link => {
+      link.addEventListener('click', function(e) {
+        e.preventDefault();
+        const targetPage = this.getAttribute('data-page');
+        showPage(targetPage);
+        window.location.hash = targetPage; // Met à jour l'URL (facultatif)
+      });
+    });
+    
+    // Au chargement, si un hash est présent dans l'URL, affiche la page concernée
+    window.addEventListener('DOMContentLoaded', function() {
+      const hash = window.location.hash.substring(1);
+      if(hash) {
+        showPage(hash);
+      }
+    });
   </script>
 </body>
 </html>
