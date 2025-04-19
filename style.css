@@ -19,6 +19,12 @@ body {
   color: #fff;
 }
 
+/* Container pour centrer le contenu */
+.container {
+  width: 80%;
+  margin: 0 auto;
+}
+
 /* Header */
 .header {
   display: flex;
@@ -57,32 +63,4 @@ body {
   width: 250px;
   height: 100%;
   background-color: #222;
-  box-shadow: 2px 0 6px rgba(0, 0, 0, 0.2);
-  transition: left 0.3s ease;
-}
-
-.menu.active {
-  left: 0;
-}
-
-.menu ul {
-  list-style-type: none;
-  padding: 0;
-  margin: 0;
-}
-
-.menu ul li {
-  padding: 20px;
-}
-
-.menu ul li a {
-  text-decoration: none;
-  color: #fff;
-  font-size: 16px;
-}
-
-.menu ul li a:hover {
-  color: #00bcd4;
-}
-
-/
+  box-shadow: 2px 0 6px rgba
