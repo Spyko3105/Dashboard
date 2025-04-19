@@ -1,251 +1,173 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dashboard Interactif Discord</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-  <style>
-    /* Variables de thème */
-    :root {
-      --primary-color: #007BFF;
-      --secondary-color: #0056b3;
-      --background-light: #f4f4f9;
-      --background-dark: #1a1a1a;
-      --text-light: black;
-      --text-dark: white;
-    }
+/* Variables de thème */
+:root {
+  --primary-color: #007BFF;
+  --secondary-color: #0056b3;
+  --background-light: #f4f4f9;
+  --background-dark: #1a1a1a;
+  --text-light: black;
+  --text-dark: white;
+}
 
-    /* Styles généraux */
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      transition: background-color 0.3s, color 0.3s;
-    }
-    body.light-theme {
-      background-color: var(--background-light);
-      color: var(--text-light);
-    }
-    body.dark-theme {
-      background-color: var(--background-dark);
-      color: var(--text-dark);
-    }
+/* Styles généraux */
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  transition: background-color 0.3s, color 0.3s;
+}
+body.light-theme {
+  background-color: var(--background-light);
+  color: var(--text-light);
+}
+body.dark-theme {
+  background-color: var(--background-dark);
+  color: var(--text-dark);
+}
 
-    header {
-      background: var(--primary-color);
-      color: white;
-      padding: 20px;
-      text-align: center;
-    }
+header {
+  background: var(--primary-color);
+  color: white;
+  padding: 20px;
+  text-align: center;
+}
 
-    /* Boutons fixes */
-    .theme-toggle, .menu-toggle {
-      position: fixed;
-      z-index: 1000;
-      background-color: var(--primary-color);
-      color: white;
-      border: none;
-      border-radius: 5px;
-      padding: 10px;
-      cursor: pointer;
-    }
-    .theme-toggle {
-      top: 10px;
-      right: 10px;
-    }
-    .menu-toggle {
-      top: 10px;
-      left: 10px;
-    }
-    .theme-toggle:hover, .menu-toggle:hover {
-      background-color: var(--secondary-color);
-    }
+/* Boutons fixes */
+.theme-toggle, .menu-toggle {
+  position: fixed;
+  z-index: 1000;
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 10px;
+  cursor: pointer;
+}
+.theme-toggle {
+  top: 10px;
+  right: 10px;
+}
+.menu-toggle {
+  top: 10px;
+  left: 10px;
+}
+.theme-toggle:hover, .menu-toggle:hover {
+  background-color: var(--secondary-color);
+}
 
-    /* Menu interactif */
-    nav {
-      display: none;
-      position: fixed;
-      top: 50px;
-      left: 10px;
-      background-color: var(--background-light);
-      box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-      padding: 10px;
-      border-radius: 5px;
-      animation: fadeIn 0.3s ease-in-out;
-    }
-    nav a {
-      display: block;
-      color: var(--primary-color);
-      text-decoration: none;
-      margin: 10px 0;
-      padding: 10px;
-      border-radius: 5px;
-      transition: background-color 0.3s;
-    }
-    nav a:hover {
-      background-color: var(--secondary-color);
-      color: white;
-    }
+/* Menu interactif */
+nav {
+  display: none;
+  position: fixed;
+  top: 50px;
+  left: 10px;
+  background-color: var(--background-light);
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 10px;
+  border-radius: 5px;
+  animation: fadeIn 0.3s ease-in-out;
+}
+nav a {
+  display: block;
+  color: var(--primary-color);
+  text-decoration: none;
+  margin: 10px 0;
+  padding: 10px;
+  border-radius: 5px;
+  transition: background-color 0.3s;
+}
+nav a:hover {
+  background-color: var(--secondary-color);
+  color: white;
+}
 
-    /* Catégories */
-    .categories {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      margin: 20px;
-    }
-    .category {
-      background: white;
-      border-radius: 10px;
-      margin: 10px;
-      padding: 20px;
-      width: 250px;
-      text-align: center;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-      transition: transform 0.3s, box-shadow 0.3s;
-      animation: fadeIn 0.6s ease-in-out;
-    }
-    .category:hover {
-      transform: scale(1.05);
-      box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
-    }
-    .category i {
-      font-size: 30px;
-      color: var(--primary-color);
-      margin-bottom: 10px;
-    }
-    .category a {
-      display: inline-block;
-      margin-top: 10px;
-      padding: 10px 20px;
-      background: var(--primary-color);
-      color: white;
-      text-decoration: none;
-      border-radius: 5px;
-      transition: background-color 0.3s;
-    }
-    .category a:hover {
-      background: var(--secondary-color);
-    }
+/* Catégories */
+.categories {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: 20px;
+}
+.category {
+  background: white;
+  border-radius: 10px;
+  margin: 10px;
+  padding: 20px;
+  width: 250px;
+  text-align: center;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s, box-shadow 0.3s;
+  animation: fadeIn 0.6s ease-in-out;
+}
+.category:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+}
+.category i {
+  font-size: 30px;
+  color: var(--primary-color);
+  margin-bottom: 10px;
+}
+.category a {
+  display: inline-block;
+  margin-top: 10px;
+  padding: 10px 20px;
+  background: var(--primary-color);
+  color: white;
+  text-decoration: none;
+  border-radius: 5px;
+  transition: background-color 0.3s;
+}
+.category a:hover {
+  background: var(--secondary-color);
+}
 
-    /* Transition des thèmes */
-    .light-theme nav {
-      background-color: var(--background-light);
-    }
-    .dark-theme nav {
-      background-color: var(--background-dark);
-    }
+/* Sections interactives */
+section {
+  display: none;
+  padding: 20px;
+  animation: fadeIn 0.5s ease-in-out;
+}
 
-    .light-theme nav a {
-      color: var(--primary-color);
-    }
-    .dark-theme nav a {
-      color: white;
-    }
+section.active {
+  display: block;
+}
 
-    /* Sections interactives */
-    section {
-      display: none;
-      padding: 20px;
-      animation: fadeIn 0.5s ease-in-out;
-    }
+.back-btn {
+  display: inline-block;
+  margin-top: 20px;
+  padding: 10px 20px;
+  background: var(--primary-color);
+  color: white;
+  text-decoration: none;
+  border-radius: 5px;
+  transition: background-color 0.3s;
+}
+.back-btn:hover {
+  background: var(--secondary-color);
+}
 
-    section.active {
-      display: block;
-    }
-
-    .back-btn {
-      display: inline-block;
-      margin-top: 20px;
-      padding: 10px 20px;
-      background: var(--primary-color);
-      color: white;
-      text-decoration: none;
-      border-radius: 5px;
-      transition: background-color 0.3s;
-    }
-    .back-btn:hover {
-      background: var(--secondary-color);
-    }
-
-    /* Effets et animations */
-    @keyframes fadeIn {
-      from {
-        opacity: 0;
-        transform: translateY(10px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    @media (max-width: 768px) {
-      body {
-        font-size: 14px;
-      }
-      .category {
-        width: 100%;
-        margin: 10px 0;
-      }
-      nav {
-        width: 100%;
-        left: 0;
-      }
-    }
-  </style>
-</head>
-<body class="light-theme">
-
-<!-- Boutons fixes -->
-<button class="theme-toggle" onclick="toggleTheme()">Changer de thème</button>
-<button class="menu-toggle" onclick="toggleMenu()">☰ Menu</button>
-
-<!-- Menu interactif -->
-<nav>
-  <a href="#features" onclick="loadPage('features')">Fonctionnalités</a>
-  <a href="#commands" onclick="loadPage('commands')">Commandes</a>
-  <a href="#servers" onclick="loadPage('servers')">Serveurs</a>
-  <a href="#about" onclick="loadPage('about')">À propos</a>
-  <a href="#contact" onclick="loadPage('contact')">Contact</a>
-</nav>
-
-<header>
-  <h1>Dashboard Interactif Discord</h1>
-</header>
-
-<!-- Contenu dynamique -->
-<div id="content">
-  <p>Bienvenue sur le Dashboard ! Cliquez sur une catégorie pour commencer.</p>
-</div>
-
-<script>
-  /* Gestion des thèmes */
-  function toggleTheme() {
-    document.body.classList.toggle('dark-theme');
-    document.body.classList.toggle('light-theme');
+/* Effets et animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
   }
-
-  /* Menu interactif */
-  function toggleMenu() {
-    const menu = document.querySelector('nav');
-    menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
+}
 
-  /* Chargement des pages dynamiques */
-  function loadPage(page) {
-    const content = document.getElementById('content');
-    const pages = {
-      features: '<h2>Fonctionnalités</h2><p>Description des fonctionnalités ici.</p>',
-      commands: '<h2>Commandes</h2><p>Liste des commandes ici.</p>',
-      servers: '<h2>Serveurs</h2><p>Gestion des serveurs ici.</p>',
-      about: '<h2>À propos</h2><p>Informations sur le projet ici.</p>',
-      contact: '<h2>Contact</h2><p>Contactez-nous ici.</p>'
-    };
-    content.innerHTML = pages[page] || '<p>Page introuvable.</p>';
-    toggleMenu(); // Ferme le menu après sélection
+/* Responsive design */
+@media (max-width: 768px) {
+  body {
+    font-size: 14px;
   }
-</script>
-
-</body>
-</html>
+  .category {
+    width: 100%;
+    margin: 10px 0;
+  }
+  nav {
+    width: 100%;
+    left: 0;
+  }
+}
