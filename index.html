@@ -6,127 +6,124 @@
   <title>Dashboard Bot Discord</title>
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 </head>
 <body class="light-theme">
-  <!-- Header avec boutons fixes -->
-  <header class="fixed-header">
-    <button class="menu-toggle" onclick="toggleMenu()">☰ Menu</button>
-    <button class="theme-toggle" onclick="toggleTheme()">Changer de thème</button>
+
+  <!-- Header - Menu & Thème -->
+  <header class="header">
+    <div class="logo">Discord Bot Dashboard</div>
+    <div class="controls">
+      <button class="menu-toggle" onclick="toggleMenu()">
+        <i class="fas fa-bars"></i> Menu
+      </button>
+      <button class="theme-toggle" onclick="toggleTheme()">
+        <i class="fas fa-sun"></i> Thème
+      </button>
+    </div>
   </header>
 
-  <!-- Menu latéral interactif -->
-  <nav id="navMenu">
-    <a href="#home" onclick="loadPage('home')"><i class="fas fa-home"></i> Accueil</a>
-    <a href="#features" onclick="loadPage('features')"><i class="fas fa-cogs"></i> Fonctionnalités</a>
-    <a href="#commands" onclick="loadPage('commands')"><i class="fas fa-terminal"></i> Commandes</a>
-    <a href="#servers" onclick="loadPage('servers')"><i class="fas fa-server"></i> Serveurs</a>
-    <a href="#about" onclick="loadPage('about')"><i class="fas fa-info-circle"></i> À propos</a>
-    <a href="#contact" onclick="loadPage('contact')"><i class="fas fa-envelope"></i> Contact</a>
-    <a href="#login" onclick="loadPage('login')"><i class="fas fa-sign-in-alt"></i> Se connecter</a>
+  <!-- Menu Latéral -->
+  <nav id="menu" class="menu">
+    <ul>
+      <li><a href="#home" onclick="loadPage('home')"><i class="fas fa-home"></i> Accueil</a></li>
+      <li><a href="#features" onclick="loadPage('features')"><i class="fas fa-cogs"></i> Fonctionnalités</a></li>
+      <li><a href="#commands" onclick="loadPage('commands')"><i class="fas fa-terminal"></i> Commandes</a></li>
+      <li><a href="#servers" onclick="loadPage('servers')"><i class="fas fa-server"></i> Serveurs</a></li>
+      <li><a href="#about" onclick="loadPage('about')"><i class="fas fa-info-circle"></i> À propos</a></li>
+      <li><a href="#contact" onclick="loadPage('contact')"><i class="fas fa-envelope"></i> Contact</a></li>
+    </ul>
   </nav>
 
   <!-- Zone de contenu dynamique -->
-  <div id="content">
-    <!-- Contenu dynamique sera injecté ici -->
+  <div id="content" class="content">
+    <!-- Contenu chargé dynamiquement ici -->
   </div>
 
-  <!-- Footer -->
-  <footer>
-    <p>&copy; 2025 Dashboard Bot Discord. Tous droits réservés.</p>
-  </footer>
-
   <script>
-    // Toggle entre les thèmes clair/sombre
+    // Fonction de changement de thème (clair/sombre)
     function toggleTheme() {
       document.body.classList.toggle('dark-theme');
       document.body.classList.toggle('light-theme');
     }
 
-    // Toggle du menu latéral
+    // Fonction d'affichage/masquage du menu
     function toggleMenu() {
-      const menu = document.getElementById('navMenu');
-      menu.classList.toggle('open');
+      const menu = document.getElementById('menu');
+      menu.classList.toggle('active');
     }
 
-    // Chargement du contenu dynamique pour chaque page
+    // Chargement dynamique des pages
     function loadPage(page) {
       const content = document.getElementById('content');
       const pages = {
         home: `
-          <section>
-            <h2>Bienvenue sur votre Dashboard Bot Discord</h2>
-            <p>Gérez votre bot Discord facilement avec des outils puissants et une interface moderne.</p>
-            <button onclick="window.location.href='https://discord.com/oauth2/authorize?client_id=1361826455406772408&permissions=8&scope=bot'" class="btn-primary">Ajouter le bot</button>
+          <section class="home">
+            <h2>Ajouter le Bot</h2>
+            <div class="bot-info">
+              <img src="https://via.placeholder.com/150" alt="Bot Image">
+              <h3>Ton Bot Discord</h3>
+              <p>Gérez facilement votre bot Discord à partir de cette interface moderne et intuitive.</p>
+              <a href="https://discord.com/oauth2/authorize?client_id=YOUR_BOT_CLIENT_ID&permissions=8&scope=bot"
+                 class="btn-primary">Ajouter le bot</a>
+            </div>
           </section>
         `,
         features: `
-          <section>
+          <section class="features">
             <h2>Fonctionnalités</h2>
-            <div class="grid">
+            <div class="feature-cards">
               <div class="card">
                 <i class="fas fa-sliders-h"></i>
                 <h3>Configuration</h3>
                 <p>Modifiez les paramètres de votre bot en temps réel.</p>
               </div>
               <div class="card">
-                <i class="fas fa-user-shield"></i>
+                <i class="fas fa-shield-alt"></i>
                 <h3>Permissions</h3>
-                <p>Définissez qui peut faire quoi sur vos serveurs.</p>
+                <p>Gérez qui peut faire quoi sur vos serveurs.</p>
               </div>
               <div class="card">
                 <i class="fas fa-database"></i>
-                <h3>Logs & Historique</h3>
-                <p>Consultez les actions effectuées sur vos serveurs et bots.</p>
+                <h3>Logs</h3>
+                <p>Accédez aux logs des actions sur vos serveurs.</p>
               </div>
             </div>
           </section>
         `,
         commands: `
-          <section>
+          <section class="commands">
             <h2>Commandes</h2>
-            <p>Voici les commandes disponibles pour interagir avec votre bot :</p>
             <ul>
-              <li><i class="fas fa-user-times"></i> <code>/ban</code> - Bannir un utilisateur</li>
-              <li><i class="fas fa-ban"></i> <code>/kick</code> - Expulser un utilisateur</li>
-              <li><i class="fas fa-bell"></i> <code>/warn</code> - Avertir un utilisateur</li>
-              <li><i class="fas fa-terminal"></i> <code>/userinfo</code> - Afficher les informations d'un utilisateur</li>
+              <li><i class="fas fa-user-times"></i> /ban - Bannir un membre</li>
+              <li><i class="fas fa-ban"></i> /kick - Expulser un membre</li>
+              <li><i class="fas fa-bell"></i> /warn - Avertir un membre</li>
             </ul>
           </section>
         `,
         servers: `
-          <section>
+          <section class="servers">
             <h2>Serveurs</h2>
-            <p>Gestion des serveurs où votre bot est installé :</p>
-            <ul>
-              <li><i class="fas fa-server"></i> Serveur 1</li>
-              <li><i class="fas fa-users"></i> Serveur 2</li>
-            </ul>
+            <p>Liste des serveurs associés à ton compte :</p>
+            <div id="guilds-list"></div>
           </section>
         `,
         about: `
-          <section>
+          <section class="about">
             <h2>À propos</h2>
-            <p>Ce dashboard vous permet de gérer et personnaliser facilement votre bot Discord.</p>
+            <p>Le Dashboard pour gérer ton bot Discord de manière fluide et moderne.</p>
           </section>
         `,
         contact: `
-          <section>
+          <section class="contact">
             <h2>Contact</h2>
-            <p>Pour toute question ou assistance, contactez-nous par email :</p>
-            <p><a href="mailto:support@example.com"><i class="fas fa-envelope"></i> support@example.com</a></p>
-          </section>
-        `,
-        login: `
-          <section>
-            <h2>Connexion via Discord</h2>
-            <p>Connectez-vous à votre compte Discord pour accéder aux fonctionnalités avancées de votre bot.</p>
-            <button onclick="window.location.href='https://discord.com/oauth2/authorize?client_id=YOUR_CLIENT_ID&permissions=8&scope=bot+identify'" class="btn-primary">Se connecter avec Discord</button>
+            <p>Pour toute assistance ou question, contacte-nous :</p>
+            <p><a href="mailto:nabox3624@gmail.com"><i class="fas fa-envelope"></i> nabox3624@gmail.com</a></p>
           </section>
         `
       };
       content.innerHTML = pages[page] || '<p>Page introuvable.</p>';
-      toggleMenu();  // Fermer le menu après avoir changé de page
+      toggleMenu();
     }
   </script>
 </body>
