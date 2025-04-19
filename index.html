@@ -14,7 +14,7 @@
   <button class="theme-toggle" onclick="toggleTheme()">Changer de thème</button>
   <button class="menu-toggle" onclick="toggleMenu()">☰ Menu</button>
   
-  <!-- Menu interactif en haut à gauche -->
+  <!-- Menu interactif -->
   <nav>
     <a href="#home" onclick="loadPage('home')">Accueil</a>
     <a href="#features" onclick="loadPage('features')">Fonctionnalités</a>
@@ -25,14 +25,22 @@
   </nav>
   
   <header>
-    <h1>Dashboard Interactif Discord</h1>
+    <h1>Dashboard pour ton Bot Discord</h1>
   </header>
   
-  <!-- Zone de contenu dynamique -->
+  <!-- Contenu dynamique -->
   <div id="content">
     <!-- Page d'accueil par défaut -->
     <h2>Accueil</h2>
-    <p>Bienvenue sur le Dashboard Interactif Discord ! Ce site vous permet de gérer votre bot avec une interface moderne et interactive. Utilisez le menu pour découvrir nos fonctionnalités, commandes, serveurs et bien plus encore.</p>
+    <div style="text-align: center;">
+      <!-- Embedding visuel du bot -->
+      <img src="https://via.placeholder.com/150" alt="Image du Bot" style="border-radius: 50%; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
+      <h3>Ton Bot Discord</h3>
+      <p>Bienvenue sur le dashboard interactif de ton bot Discord.</p>
+      <p>Accède à toutes les fonctionnalités et gérez ton bot en toute simplicité.</p>
+      <a href="https://discord.com/api/oauth2/authorize?client_id=TON_CLIENT_ID&redirect_uri=https%3A%2F%2Fspyko3105.github.io%2FDashboard%2F&response_type=code&scope=identify%20guilds&permissions=8" 
+         style="background: var(--primary-color); color: white; padding: 10px 20px; border-radius: 5px; text-decoration: none; display: inline-block;">Connexion au Bot</a>
+    </div>
   </div>
   
   <script>
@@ -48,72 +56,71 @@
       menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
     }
   
-    /* Chargement des pages dynamiques */
+    /* Pages dynamiques */
     function loadPage(page) {
       const content = document.getElementById('content');
       const pages = {
         home: `
           <h2>Accueil</h2>
-          <p>Bienvenue sur le Dashboard Interactif Discord ! Ce site vous offre une interface conviviale et dynamique pour gérer votre bot. Parcourez les différentes sections via le menu pour découvrir nos outils avancés.</p>
-          <p>Vous pouvez personnaliser l'interface, consulter les commandes et surveiller l'activité des serveurs en temps réel.</p>
+          <div style="text-align: center;">
+            <img src="https://via.placeholder.com/150" alt="Image du Bot" style="border-radius: 50%; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
+            <h3>Ton Bot Discord</h3>
+            <p>Bienvenue sur le dashboard interactif de ton bot Discord.</p>
+            <p>Accède à toutes les fonctionnalités et gère ton bot facilement.</p>
+            <a href="https://discord.com/api/oauth2/authorize?client_id=TON_CLIENT_ID&redirect_uri=https%3A%2F%2Fspyko3105.github.io%2FDashboard%2F&response_type=code&scope=identify%20guilds&permissions=8"
+              style="background: var(--primary-color); color: white; padding: 10px 20px; border-radius: 5px; text-decoration: none; display: inline-block;">Connexion au Bot</a>
+          </div>
         `,
         features: `
           <h2>Fonctionnalités</h2>
-          <p>Notre dashboard offre de nombreuses fonctionnalités :</p>
-          <ul>
-            <li>Gestion en temps réel des configurations du bot</li>
-            <li>Système de permissions avancé</li>
-            <li>Logs et historiques détaillés</li>
-            <li>Notifications personnalisées</li>
-            <li>Intégration complète avec l’API Discord</li>
-            <li>Interface responsive et adaptable</li>
-          </ul>
+          <p>Découvre tout ce que ton bot peut faire :</p>
+          <div class="grid">
+            <div class="card">
+              <i class="fas fa-sliders-h"></i>
+              <h3>Configuration</h3>
+              <p>Modifie les paramètres en temps réel.</p>
+            </div>
+            <div class="card">
+              <i class="fas fa-user-shield"></i>
+              <h3>Permissions</h3>
+              <p>Gère les accès sur tes serveurs.</p>
+            </div>
+            <div class="card">
+              <i class="fas fa-database"></i>
+              <h3>Logs</h3>
+              <p>Consulte les historiques d'activités.</p>
+            </div>
+          </div>
         `,
         commands: `
           <h2>Commandes</h2>
-          <p>Voici une liste des commandes disponibles :</p>
+          <p>Utilise les commandes suivantes :</p>
           <ul>
-            <li><code>/kick</code> – Expulsez un membre du serveur</li>
-            <li><code>/ban</code> – Bannissez un membre</li>
-            <li><code>/warn</code> – Avertissez un membre</li>
-            <li><code>/userinfo</code> – Affichez les informations d'un utilisateur</li>
-            <li><code>/help</code> – Obtenez de l'aide sur les commandes</li>
+            <li><code>/kick</code> - Expulse un membre</li>
+            <li><code>/ban</code> - Bannit un utilisateur</li>
+            <li><code>/warn</code> - Avertit un membre</li>
           </ul>
         `,
         servers: `
           <h2>Serveurs</h2>
-          <p>Gérez vos serveurs et surveillez leur activité en temps réel :</p>
+          <p>Surveille l'activité de tes serveurs :</p>
           <ul>
-            <li>Serveur Principal</li>
-            <li>TestBot HQ</li>
-            <li>Communauté Discord</li>
-            <li>Serveur d'assistance</li>
+            <li>Serveur Discord</li>
+            <li>Communauté</li>
           </ul>
-          <p>Consultez les logs, statistiques et notifications pour chaque serveur.</p>
         `,
         about: `
           <h2>À propos</h2>
-          <p>Ce dashboard a été conçu pour fournir une interface simple et puissante à tous les administrateurs Discord.</p>
-          <p>Notre mission est de faciliter la gestion de votre bot et d'offrir une expérience utilisateur optimale à travers des outils modernes et intuitifs.</p>
+          <p>Ce projet est dédié à simplifier la gestion de ton bot Discord.</p>
         `,
         contact: `
           <h2>Contact</h2>
-          <p>Pour toute demande d'assistance ou collaboration, veuillez nous contacter à l'adresse suivante :</p>
+          <p>Pour toute question ou assistance, écris-nous à :</p>
           <p><a href="mailto:nabox3624@gmail.com">nabox3624@gmail.com</a></p>
-          <h3>Ou utilisez le formulaire ci-dessous :</h3>
-          <form action="mailto:nabox3624@gmail.com" method="post" enctype="text/plain">
-            <label for="name">Nom :</label><br>
-            <input type="text" id="name" name="name" required><br><br>
-            <label for="email">Email :</label><br>
-            <input type="email" id="email" name="email" required><br><br>
-            <label for="message">Message :</label><br>
-            <textarea id="message" name="message" rows="5" required></textarea><br><br>
-            <input type="submit" value="Envoyer" style="background: var(--primary-color); color: white; border: none; padding: 10px; border-radius: 5px; cursor: pointer;">
-          </form>
         `
       };
       content.innerHTML = pages[page] || '<p>Page introuvable.</p>';
-      toggleMenu(); // Ferme le menu après le chargement de la page
+      toggleMenu(); // Ferme le menu après chargement de la page
     }
   </script>
 </body>
