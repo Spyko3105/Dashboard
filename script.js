@@ -1,29 +1,27 @@
 async function startBot() {
-  const password = document.getElementById('password').value;
-  const messageDiv = document.getElementById('message');
+  const password = document.getElementById("password").value;
+  const message = document.getElementById("message");
 
-  if (!password) {
-    messageDiv.textContent = "⚠️ Mot de passe requis.";
-    return;
-  }
+  const res = await fetch('/bot/start', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ password })
+  });
 
-  messageDiv.textContent = "⏳ Envoi de la commande...";
+  const data = await res.json();
+  message.textContent = data.message || '❌ Erreur réseau ou serveur.';
+}
 
-  try {
-    const res = await fetch('/bot/start', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ password })
-    });
+async function stopBot() {
+  const password = document.getElementById("password").value;
+  const message = document.getElementById("message");
 
-    const data = await res.json();
+  const res = await fetch('/bot/stop', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ password })
+  });
 
-    if (res.ok) {
-      messageDiv.textContent = "✅ " + data.message;
-    } else {
-      messageDiv.textContent = "❌ " + data.message;
-    }
-  } catch (err) {
-    messageDiv.textContent = "❌ Erreur réseau ou serveur.";
-  }
+  const data = await res.json();
+  message.textContent = data.message || '❌ Erreur réseau ou serveur.';
 }
