@@ -1,625 +1,68 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Discord Bot Dashboard</title>
-    <link rel="stylesheet" href="style.css">
-    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+  <meta charset="UTF-8">
+  <title>Dashboard Bot Discord</title>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      background-color: #111;
+      color: white;
+      font-family: 'Outfit', sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+
+    .panel {
+      background: #1f1f1f;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 0 20px #000;
+      width: 320px;
+      text-align: center;
+    }
+
+    input[type="password"] {
+      width: 100%;
+      padding: 10px;
+      border-radius: 8px;
+      border: none;
+      margin-bottom: 15px;
+      background-color: #2a2a2a;
+      color: white;
+    }
+
+    button {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 8px;
+      background-color: #5865f2;
+      color: white;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background-color 0.2s;
+    }
+
+    button:hover {
+      background-color: #4752c4;
+    }
+
+    #message {
+      margin-top: 15px;
+      font-size: 0.9em;
+    }
+  </style>
 </head>
 <body>
-    <div class="dashboard-container">
-        <!-- Sidebar -->
-        <aside class="sidebar">
-            <div class="sidebar-header">
-                <div class="logo">
-                    <i data-lucide="bot"></i>
-                    <span>Bot Dashboard</span>
-                </div>
-                <button class="toggle-sidebar" aria-label="Toggle Sidebar">
-                    <i data-lucide="menu"></i>
-                </button>
-            </div>
+  <div class="panel">
+    <h2>Contrôle du Bot</h2>
+    <input type="password" id="password" placeholder="Mot de passe" />
+    <button onclick="startBot()">🚀 Allumer le Bot</button>
+    <div id="message"></div>
+  </div>
 
-            <nav class="nav-menu">
-                <a href="#" class="nav-item active">
-                    <i data-lucide="layout-dashboard"></i>
-                    <span>Dashboard</span>
-                </a>
-                <a href="#" class="nav-item">
-                    <i data-lucide="message-square"></i>
-                    <span>Commandes</span>
-                </a>
-                <a href="#" class="nav-item">
-                    <i data-lucide="server"></i>
-                    <span>Serveurs</span>
-                </a>
-                <a href="#" class="nav-item">
-                    <i data-lucide="link"></i>
-                    <span>Connexion Discord</span>
-                </a>
-                <a href="#" class="nav-item">
-                    <i data-lucide="settings"></i>
-                    <span>Paramètres</span>
-                </a>
-            </nav>
-
-            <div class="bot-status-container">
-                <div id="bot-status" class="bot-status offline">
-                    <div class="status-indicator"></div>
-                    <span id="bot-status-text">Bot hors ligne</span>
-                </div>
-                <div class="bot-controls">
-                    <button id="toggle-bot" class="bot-toggle-btn">
-                        <i data-lucide="power"></i>
-                        <span>Connecter</span>
-                    </button>
-                    <button id="refresh-stats" class="refresh-btn" disabled>
-                        <i data-lucide="refresh-cw"></i>
-                    </button>
-                </div>
-            </div>
-        </aside>
-
-        <!-- Main Content -->
-        <main class="main-content">
-            <!-- Header -->
-            <header class="header">
-                <div class="mobile-menu">
-                    <button class="mobile-menu-btn" aria-label="Mobile Menu">
-                        <i data-lucide="menu"></i>
-                    </button>
-                </div>
-
-                <div class="header-title">
-                    <h1>Dashboard</h1>
-                </div>
-
-                <div class="header-actions">
-                    <div class="theme-toggle" aria-label="Toggle Theme">
-                        <i data-lucide="sun"></i>
-                    </div>
-                    <div class="user-menu">
-                        <span id="bot-owner-name">Non connecté</span>
-                        <div class="avatar">
-                            <div id="bot-owner-avatar" class="avatar-placeholder">?</div>
-                        </div>
-                    </div>
-                </div>
-            </header>
-
-            <!-- Dashboard Content -->
-            <div class="dashboard-content">
-                <!-- Key Metrics -->
-                <section class="metrics-section">
-                    <div class="metric-card">
-                        <div class="metric-icon">
-                            <i data-lucide="server"></i>
-                        </div>
-                        <div class="metric-content">
-                            <h3>Total Serveurs</h3>
-                            <p id="total-servers" class="metric-value">0</p>
-                            <p class="metric-change positive">+5% <span>dernier mois</span></p>
-                        </div>
-                    </div>
-                    <div class="metric-card">
-                        <div class="metric-icon">
-                            <i data-lucide="users"></i>
-                        </div>
-                        <div class="metric-content">
-                            <h3>Total Utilisateurs</h3>
-                            <p id="total-users" class="metric-value">0</p>
-                            <p class="metric-change positive">+12% <span>dernier mois</span></p>
-                        </div>
-                    </div>
-                    <div class="metric-card">
-                        <div class="metric-icon">
-                            <i data-lucide="message-square"></i>
-                        </div>
-                        <div class="metric-content">
-                            <h3>Total Commandes</h3>
-                            <p id="total-commands" class="metric-value">0</p>
-                            <p class="metric-change positive">+15% <span>dernier mois</span></p>
-                        </div>
-                    </div>
-                    <div class="metric-card">
-                        <div class="metric-icon">
-                            <i data-lucide="alert-triangle"></i>
-                        </div>
-                        <div class="metric-content">
-                            <h3>Taux d'Erreurs</h3>
-                            <p id="error-rate" class="metric-value">0%</p>
-                            <p class="metric-change negative">+0.2% <span>dernier mois</span></p>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- Bot Status Card -->
-                <div class="dashboard-grid">
-                    <section class="bot-status-card">
-                        <h2>Statut du Bot</h2>
-                        <div class="status-details">
-                            <div id="status-indicator-large" class="status-indicator-large offline"></div>
-                            <div class="status-text">
-                                <h3 id="status-title">Hors ligne</h3>
-                                <p id="status-subtitle">Dernier redémarrage : inconnu</p>
-                            </div>
-                        </div>
-
-                        <div class="bot-owner">
-                            <h3>Propriétaire du Bot</h3>
-                            <div class="owner-details">
-                                <div id="owner-avatar" class="owner-avatar">
-                                    <div id="owner-avatar-placeholder">?</div>
-                                </div>
-                                <div class="owner-info">
-                                    <h4 id="owner-name">Non connecté</h4>
-                                    <p id="owner-status" class="owner-status offline">
-                                        <span class="status-dot"></span>
-                                        Hors ligne
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="bot-actions">
-                            <button id="connect-bot" class="btn primary">
-                                <i data-lucide="power"></i>
-                                Connecter le bot
-                            </button>
-                            <button id="disconnect-bot" class="btn secondary" style="display: none;">
-                                <i data-lucide="power-off"></i>
-                                Déconnecter
-                            </button>
-                            <button id="restart-bot" class="btn secondary" style="display: none;">
-                                <i data-lucide="refresh-cw"></i>
-                                Redémarrer
-                            </button>
-                        </div>
-                    </section>
-
-                    <section class="activity-chart">
-                        <h2>Activité du Bot</h2>
-                        <div class="chart-container">
-                            <div class="chart-placeholder">
-                                <div class="chart-bars">
-                                    <div class="chart-bar" style="height: 30%;"></div>
-                                    <div class="chart-bar" style="height: 45%;"></div>
-                                    <div class="chart-bar" style="height: 60%;"></div>
-                                    <div class="chart-bar" style="height: 40%;"></div>
-                                    <div class="chart-bar" style="height: 75%;"></div>
-                                    <div class="chart-bar" style="height: 90%;"></div>
-                                    <div class="chart-bar" style="height: 65%;"></div>
-                                </div>
-                            </div>
-                            <div class="chart-legend">
-                                <div class="legend-item">
-                                    <div class="legend-color commands"></div>
-                                    <span>Commandes</span>
-                                </div>
-                                <div class="legend-item">
-                                    <div class="legend-color users"></div>
-                                    <span>Utilisateurs actifs</span>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
-
-                    <section class="server-growth">
-                        <h2>Croissance des Serveurs</h2>
-                        <div class="chart-container">
-                            <div class="chart-placeholder line-chart">
-                                <svg viewBox="0 0 300 150" class="line-chart-svg">
-                                    <path d="M0,150 L50,120 L100,130 L150,100 L200,80 L250,50 L300,30" class="chart-line"></path>
-                                    <path d="M0,150 L50,120 L100,130 L150,100 L200,80 L250,50 L300,30 L300,150 L0,150" class="chart-area"></path>
-                                </svg>
-                            </div>
-                            <div class="growth-stats">
-                                <div class="growth-stat">
-                                    <span class="growth-value">+24%</span>
-                                    <span class="growth-label">30 derniers jours</span>
-                                </div>
-                                <div class="growth-stat">
-                                    <span class="growth-value">+124</span>
-                                    <span class="growth-label">Nouveaux serveurs</span>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
-
-                    <section class="top-servers">
-                        <h2>Meilleurs Serveurs</h2>
-                        <div class="server-list">
-                            <div class="server-item">
-                                <div class="server-info">
-                                    <div class="server-icon"></div>
-                                    <div class="server-details">
-                                        <h3 class="server-name">Gaming Community</h3>
-                                        <p class="server-stats">15,420 membres</p>
-                                    </div>
-                                </div>
-                                <div class="server-activity">
-                                    <div class="activity-bar">
-                                        <div class="activity-fill" style="width: 90%;"></div>
-                                    </div>
-                                    <span class="activity-percentage">90% activité</span>
-                                </div>
-                            </div>
-                            <div class="server-item">
-                                <div class="server-info">
-                                    <div class="server-icon"></div>
-                                    <div class="server-details">
-                                        <h3 class="server-name">Music Lovers</h3>
-                                        <p class="server-stats">8,730 membres</p>
-                                    </div>
-                                </div>
-                                <div class="server-activity">
-                                    <div class="activity-bar">
-                                        <div class="activity-fill" style="width: 85%;"></div>
-                                    </div>
-                                    <span class="activity-percentage">85% activité</span>
-                                </div>
-                            </div>
-                            <div class="server-item">
-                                <div class="server-info">
-                                    <div class="server-icon"></div>
-                                    <div class="server-details">
-                                        <h3 class="server-name">Dev Hub</h3>
-                                        <p class="server-stats">5,280 membres</p>
-                                    </div>
-                                </div>
-                                <div class="server-activity">
-                                    <div class="activity-bar">
-                                        <div class="activity-fill" style="width: 78%;"></div>
-                                    </div>
-                                    <span class="activity-percentage">78% activité</span>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
-
-                    <section class="commands-distribution">
-                        <h2>Distribution des Commandes</h2>
-                        <div class="commands-chart">
-                            <div class="pie-chart">
-                                <div class="pie-segment" style="--segment-size: 35%; --segment-color: var(--primary);"></div>
-                                <div class="pie-segment" style="--segment-size: 25%; --segment-color: var(--success);"></div>
-                                <div class="pie-segment" style="--segment-size: 20%; --segment-color: var(--warning);"></div>
-                                <div class="pie-segment" style="--segment-size: 20%; --segment-color: var(--secondary);"></div>
-                            </div>
-                            <div class="commands-legend">
-                                <div class="legend-item">
-                                    <div class="legend-color" style="background-color: var(--primary);"></div>
-                                    <span>/play - 35%</span>
-                                </div>
-                                <div class="legend-item">
-                                    <div class="legend-color" style="background-color: var(--success);"></div>
-                                    <span>/skip - 25%</span>
-                                </div>
-                                <div class="legend-item">
-                                    <div class="legend-color" style="background-color: var(--warning);"></div>
-                                    <span>/queue - 20%</span>
-                                </div>
-                                <div class="legend-item">
-                                    <div class="legend-color" style="background-color: var(--secondary);"></div>
-                                    <span>Autres - 20%</span>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
-
-                    <section class="recent-commands">
-                        <h2>Commandes Récentes</h2>
-                        <div class="commands-table">
-                            <div class="table-header">
-                                <div class="header-cell">Commande</div>
-                                <div class="header-cell">Utilisateur</div>
-                                <div class="header-cell">Serveur</div>
-                                <div class="header-cell">Heure</div>
-                                <div class="header-cell">Statut</div>
-                            </div>
-                            <div class="table-body">
-                                <div class="table-row">
-                                    <div class="cell">/play</div>
-                                    <div class="cell">User#1234</div>
-                                    <div class="cell">Gaming Community</div>
-                                    <div class="cell">Il y a 5 min</div>
-                                    <div class="cell"><span class="status success">Succès</span></div>
-                                </div>
-                                <div class="table-row">
-                                    <div class="cell">/skip</div>
-                                    <div class="cell">User#5678</div>
-                                    <div class="cell">Music Lovers</div>
-                                    <div class="cell">Il y a 8 min</div>
-                                    <div class="cell"><span class="status success">Succès</span></div>
-                                </div>
-                                <div class="table-row">
-                                    <div class="cell">/ban</div>
-                                    <div class="cell">Admin#9012</div>
-                                    <div class="cell">Gaming Community</div>
-                                    <div class="cell">Il y a 15 min</div>
-                                    <div class="cell"><span class="status success">Succès</span></div>
-                                </div>
-                                <div class="table-row">
-                                    <div class="cell">/help</div>
-                                    <div class="cell">Newbie#3456</div>
-                                    <div class="cell">Dev Hub</div>
-                                    <div class="cell">Il y a 20 min</div>
-                                    <div class="cell"><span class="status success">Succès</span></div>
-                                </div>
-                                <div class="table-row">
-                                    <div class="cell">/stats</div>
-                                    <div class="cell">User#7890</div>
-                                    <div class="cell">Gaming Community</div>
-                                    <div class="cell">Il y a 25 min</div>
-                                    <div class="cell"><span class="status error">Erreur</span></div>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
-                </div>
-            </div>
-        </main>
-    </div>
-
-    <script>
-        // Initialiser les icônes Lucide
-        lucide.createIcons();
-
-        // Variables pour stocker l'état du bot
-        let botConnected = false;
-        let botOwner = {
-            username: 'Non connecté',
-            avatar: '',
-            isOnline: false
-        };
-        let botStats = {
-            serverCount: 0,
-            userCount: 0,
-            commandCount: 0,
-            errorRate: '0%',
-            lastRestart: new Date()
-        };
-
-        // Éléments DOM
-        const botStatusEl = document.getElementById('bot-status');
-        const botStatusTextEl = document.getElementById('bot-status-text');
-        const botToggleBtn = document.getElementById('toggle-bot');
-        const refreshStatsBtn = document.getElementById('refresh-stats');
-        const totalServersEl = document.getElementById('total-servers');
-        const totalUsersEl = document.getElementById('total-users');
-        const totalCommandsEl = document.getElementById('total-commands');
-        const errorRateEl = document.getElementById('error-rate');
-        const statusIndicatorLargeEl = document.getElementById('status-indicator-large');
-        const statusTitleEl = document.getElementById('status-title');
-        const statusSubtitleEl = document.getElementById('status-subtitle');
-        const ownerNameEl = document.getElementById('owner-name');
-        const ownerStatusEl = document.getElementById('owner-status');
-        const ownerAvatarEl = document.getElementById('owner-avatar');
-        const ownerAvatarPlaceholderEl = document.getElementById('owner-avatar-placeholder');
-        const botOwnerNameEl = document.getElementById('bot-owner-name');
-        const botOwnerAvatarEl = document.getElementById('bot-owner-avatar');
-        const connectBotBtn = document.getElementById('connect-bot');
-        const disconnectBotBtn = document.getElementById('disconnect-bot');
-        const restartBotBtn = document.getElementById('restart-bot');
-
-        // Fonction pour mettre à jour l'affichage
-        function updateUI() {
-            // Mettre à jour le statut du bot
-            if (botConnected) {
-                botStatusEl.className = 'bot-status online';
-                botStatusTextEl.textContent = 'Bot en ligne';
-                statusIndicatorLargeEl.className = 'status-indicator-large online';
-                statusTitleEl.textContent = 'En ligne';
-                statusSubtitleEl.textContent = `Dernier redémarrage : ${formatDate(botStats.lastRestart)}`;
-                
-                // Afficher les boutons déconnecter/redémarrer
-                connectBotBtn.style.display = 'none';
-                disconnectBotBtn.style.display = 'inline-flex';
-                restartBotBtn.style.display = 'inline-flex';
-                
-                // Activer le bouton de rafraîchissement
-                refreshStatsBtn.disabled = false;
-                
-                // Mettre à jour le texte du bouton toggle
-                botToggleBtn.innerHTML = '<i data-lucide="power-off"></i><span>Déconnecter</span>';
-                
-                // Mettre à jour les statistiques
-                totalServersEl.textContent = botStats.serverCount.toLocaleString();
-                totalUsersEl.textContent = botStats.userCount.toLocaleString();
-                totalCommandsEl.textContent = botStats.commandCount.toLocaleString();
-                errorRateEl.textContent = botStats.errorRate;
-            } else {
-                botStatusEl.className = 'bot-status offline';
-                botStatusTextEl.textContent = 'Bot hors ligne';
-                statusIndicatorLargeEl.className = 'status-indicator-large offline';
-                statusTitleEl.textContent = 'Hors ligne';
-                statusSubtitleEl.textContent = 'Le bot est actuellement déconnecté';
-                
-                // Afficher le bouton connecter
-                connectBotBtn.style.display = 'inline-flex';
-                disconnectBotBtn.style.display = 'none';
-                restartBotBtn.style.display = 'none';
-                
-                // Désactiver le bouton de rafraîchissement
-                refreshStatsBtn.disabled = true;
-                
-                // Mettre à jour le texte du bouton toggle
-                botToggleBtn.innerHTML = '<i data-lucide="power"></i><span>Connecter</span>';
-            }
-            
-            // Mettre à jour les informations du propriétaire
-            ownerNameEl.textContent = botOwner.username;
-            botOwnerNameEl.textContent = botOwner.username;
-            
-            if (botOwner.isOnline) {
-                ownerStatusEl.className = 'owner-status online';
-                ownerStatusEl.innerHTML = '<span class="status-dot"></span>En ligne';
-            } else {
-                ownerStatusEl.className = 'owner-status offline';
-                ownerStatusEl.innerHTML = '<span class="status-dot"></span>Hors ligne';
-            }
-            
-            // Mettre à jour l'avatar du propriétaire
-            if (botOwner.avatar) {
-                ownerAvatarEl.style.backgroundImage = `url(${botOwner.avatar})`;
-                ownerAvatarPlaceholderEl.style.display = 'none';
-                botOwnerAvatarEl.style.backgroundImage = `url(${botOwner.avatar})`;
-                botOwnerAvatarEl.textContent = '';
-            } else {
-                ownerAvatarPlaceholderEl.textContent = botOwner.username.charAt(0).toUpperCase();
-                ownerAvatarPlaceholderEl.style.display = 'flex';
-                botOwnerAvatarEl.style.backgroundImage = 'none';
-                botOwnerAvatarEl.textContent = botOwner.username.charAt(0).toUpperCase();
-            }
-            
-            // Réinitialiser les icônes Lucide
-            lucide.createIcons();
-        }
-        
-        // Fonction pour formater une date
-        function formatDate(date) {
-            if (!date) return 'inconnu';
-            
-            const now = new Date();
-            const diff = now - new Date(date);
-            
-            // Convertir en jours/heures/minutes
-            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-            
-            if (days > 0) {
-                return `il y a ${days} jour${days > 1 ? 's' : ''}`;
-            } else if (hours > 0) {
-                return `il y a ${hours} heure${hours > 1 ? 's' : ''}`;
-            } else {
-                return `il y a ${minutes} minute${minutes > 1 ? 's' : ''}`;
-            }
-        }
-        
-        // Fonction pour simuler la connexion/déconnexion du bot
-        function toggleBot() {
-            botConnected = !botConnected;
-            
-            if (botConnected) {
-                // Simuler des statistiques
-                botStats = {
-                    serverCount: 184,
-                    userCount: 64250,
-                    commandCount: 238411,
-                    errorRate: '0.8%',
-                    lastRestart: new Date()
-                };
-                
-                // Simuler des informations du propriétaire
-                botOwner = {
-                    username: 'Propriétaire du Bot',
-                    avatar: '',
-                    isOnline: true
-                };
-                
-                showNotification('Bot connecté avec succès', 'success');
-            } else {
-                showNotification('Bot déconnecté avec succès', 'info');
-            }
-            
-            updateUI();
-        }
-        
-        // Fonction pour afficher une notification
-        function showNotification(message, type = 'info') {
-            const notification = document.createElement('div');
-            notification.className = `notification ${type}`;
-            notification.innerHTML = `
-                <div class="notification-icon">
-                    <i data-lucide="${type === 'success' ? 'check-circle' : type === 'error' ? 'alert-circle' : 'info'}"></i>
-                </div>
-                <div class="notification-content">
-                    <p>${message}</p>
-                </div>
-                <button class="notification-close">
-                    <i data-lucide="x"></i>
-                </button>
-            `;
-            
-            document.body.appendChild(notification);
-            lucide.createIcons();
-            
-            // Supprimer la notification après 5 secondes
-            setTimeout(() => {
-                notification.classList.add('fade-out');
-                setTimeout(() => {
-                    document.body.removeChild(notification);
-                }, 300);
-            }, 5000);
-            
-            // Fermer la notification en cliquant sur le bouton
-            const closeBtn = notification.querySelector('.notification-close');
-            closeBtn.addEventListener('click', () => {
-                notification.classList.add('fade-out');
-                setTimeout(() => {
-                    document.body.removeChild(notification);
-                }, 300);
-            });
-        }
-        
-        // Écouteurs d'événements
-        botToggleBtn.addEventListener('click', toggleBot);
-        connectBotBtn.addEventListener('click', toggleBot);
-        disconnectBotBtn.addEventListener('click', toggleBot);
-        
-        restartBotBtn.addEventListener('click', () => {
-            if (botConnected) {
-                showNotification('Bot redémarré avec succès', 'success');
-                botStats.lastRestart = new Date();
-                updateUI();
-            }
-        });
-        
-        refreshStatsBtn.addEventListener('click', () => {
-            if (botConnected) {
-                // Simuler un rafraîchissement des statistiques
-                botStats.serverCount += Math.floor(Math.random() * 5);
-                botStats.userCount += Math.floor(Math.random() * 200);
-                botStats.commandCount += Math.floor(Math.random() * 500);
-                updateUI();
-                showNotification('Statistiques mises à jour', 'success');
-            }
-        });
-        
-        // Toggle sidebar on mobile
-        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
-        const toggleSidebarBtn = document.querySelector('.toggle-sidebar');
-        const dashboardContainer = document.querySelector('.dashboard-container');
-        
-        mobileMenuBtn.addEventListener('click', () => {
-            dashboardContainer.classList.toggle('show-sidebar');
-        });
-        
-        toggleSidebarBtn.addEventListener('click', () => {
-            dashboardContainer.classList.toggle('collapsed-sidebar');
-        });
-        
-        // Toggle theme
-        const themeToggle = document.querySelector('.theme-toggle');
-        
-        themeToggle.addEventListener('click', () => {
-            document.body.classList.toggle('light-theme');
-            
-            // Changer l'icône
-            const themeIcon = themeToggle.querySelector('i');
-            if (document.body.classList.contains('light-theme')) {
-                themeIcon.setAttribute('name', 'moon');
-            } else {
-                themeIcon.setAttribute('name', 'sun');
-            }
-            
-            lucide.createIcons();
-        });
-        
-        // Initialiser l'UI
-        updateUI();
-    </script>
+  <script src="script.js"></script>
 </body>
 </html>
